@@ -108,14 +108,18 @@ main #exam_time_table tbody tr td {
   align-items: center;
 
   font-size: 3.5vw;
+
+  transform: scale(0);
+
 }
 
 #popup #window {
 
-  width: 60vw;
-  height: 40vw;
+  width: 70vw;
 
-  opacity: 0.9;
+  padding: var(--font-size-default);
+
+  opacity: 0.95;
 
   cursor: default;
 
@@ -167,6 +171,7 @@ main #exam_time_table tbody tr td {
   align-items: center;
 
   color: rgb(0, 0, 0);
+
 }
 
 #popup #window #text section {
@@ -191,6 +196,7 @@ main #exam_time_table tbody tr td {
 #popup #window #text #range ul li {
   width: 80%;
   border-bottom: solid 2px black;
+  font-size: 0.9em;
 }
 
 #popup #window #text #question ul {

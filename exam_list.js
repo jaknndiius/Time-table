@@ -81,7 +81,20 @@ function clickSubject(event) {
   const id = target.id.split("-");
   const subject = exam_list[id[1]].subject[id[2]];
 
-  console.log(subject)
+  const title = document.querySelector("#popup #window #text #title");
+  const range_ul = document.querySelector("#popup #window #text #range ul");
+  const question_ul = document.querySelector("#popup #window #text #question ul");
+  
+  title.innerHTML = `&lt ${subject.name} &gt`;
+  range_ul.innerHTML = "";
+  subject.range.forEach((value) => {
+    const li = document.createElement("li");
+    li.innerHTML = value;
+    range_ul.appendChild(li);
+  })
+
+  question_ul.firstElementChild.innerHTML = `선택형 ${subject.selective}개`
+  question_ul.lastElementChild.innerHTML = `서술형 ${subject.descriptive}개`
 
   popup.animate(keyf, {
     duration: 400,
