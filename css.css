@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+:root {
+
+  /* font */
+  --font-default: sans-serif;
+  --font-poor-story: 'Poor Story', var(--font-default);
+
+  /* font size */
+  --font-size-bolder: 2rem;
+  --font-size-bold: 1.5rem;
+  --font-size-default: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+  font-weight: bold;
+  word-break: keep-all;
+}
+
+body {
+  font-family: var(--font-poor-story);
+
+  user-select: none;
+}
+
+header #title {
+
+  font-size: var(--font-size-bolder);
+
+  padding: var(--font-size-bolder);
+
+}
+
+.lin {
+  background: linear-gradient(to right, rgb(255, 0, 0), rgb(255, 213, 46));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lin-highlight {
+  background: linear-gradient(to right, rgb(26, 87, 255),rgb(172, 39, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+main #next_time {
+  font-size: var(--font-size-bold);
+}
+
+main #today_time_table {
+  margin-top: 20px;
+
+  min-width: 300px;
+}
+
+main #time_table {
+
+  margin-top: 20px;
+
+  min-width: 300px;
+}
+
+
+footer {
+
+  font-size: var(--font-default);
+
+  position: fixed;
+  bottom: calc(var(--font-size-default) * 0.75);
+  background-color: white;
+  width: 100%;
+}
+
+footer span {
+  color: red;
+}
