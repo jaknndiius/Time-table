@@ -120,10 +120,12 @@ function update() {
   //current class style change
   const highlight_list = [
     document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`),
-    document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`),
-    document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
+    document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`)
   ]
-  highlight_list.forEach((value) => value.className = "lin-highlight");
+  highlight_list.forEach((value) => value.className = "lin-highlight1");
+
+  const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
+  weekend.className = "lin-highlight2"
 
   // #next_time update
   document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";

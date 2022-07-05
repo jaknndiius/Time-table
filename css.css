@@ -42,7 +42,13 @@ header #title {
   -webkit-text-fill-color: transparent;
 }
 
-.lin-highlight {
+.lin-highlight1 {
+  background: linear-gradient(to right, rgb(76, 213, 13), rgb(0, 235, 184));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lin-highlight2 {
   background: linear-gradient(to right, rgb(26, 87, 255),rgb(172, 39, 255));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
