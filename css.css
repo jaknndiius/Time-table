@@ -112,6 +112,7 @@ main #exam_time_table tbody tr td {
 
   transform: scale(0);
 
+  backdrop-filter: blur(1.5px);
 }
 
 #popup #window {
