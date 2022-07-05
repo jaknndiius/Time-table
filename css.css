@@ -79,6 +79,15 @@ main #time_table {
   min-width: 300px;
 }
 
+main #exam_time_table {
+  
+  margin-top: 40px;
+  min-width: 300px;
+}
+
+main #exam_time_table thead tr:first-child {
+  color: rgb(110, 110, 110);
+}
 
 footer {
 

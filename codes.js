@@ -120,17 +120,18 @@ function update() {
   to_tbody.innerHTML = "";
   to_tbody.appendChild(makeTr(day))
   //current class style change
-  const highlight_list = [
-    document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`),
-    document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`)
-  ]
-  highlight_list.forEach((value) => value.className = "lin-highlight1");
+
+  const high1 = document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`);
+  if(high1 != null) high1.className = "lin-highlight1"
+  const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
+  if(high2 != null) hig2.className = "lin-highlight1";
 
   const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
   weekend.className = "lin-highlight2";
 
   // #next_time update
-  document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
+  if(current_class > 0)
+    document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
 
   function toSchool(hour, minute, second) {
     const school_hour = 16;
@@ -158,8 +159,5 @@ function update() {
   const school_time = toSchool(hours, minutes, seconds);
   if(school_time != null)
     footer.innerHTML = `하교까지 약 <span>${school_time[0]}</span>시간 = <span>${school_time[1]}</span>분 = <span>${school_time[2]}</span>초 남았다!`
-  else {
-    console.log("eeeeeeeeeeeeeeeeeeeeer")
-  }
 }
 setInterval(update, 1)
