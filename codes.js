@@ -1,3 +1,5 @@
+'use strict'
+
 const week_name = ["일", "월", "화", "수", "목", "금", "토"]
 const week_class = [
   [],
@@ -134,9 +136,6 @@ function update() {
     const school_hour = 16;
     const school_minute = 0;
     const school_second = 0;
-
-    // 12 10 5
-    // 
 
     const untill_hour = school_hour - hour;
     const untill_minute = school_minute - minute;
