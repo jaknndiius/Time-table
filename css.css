@@ -89,6 +89,124 @@ main #exam_time_table thead tr:first-child {
   color: rgb(110, 110, 110);
 }
 
+main #exam_time_table tbody tr td {
+  cursor: pointer;
+}
+
+
+#popup {
+  position: fixed;
+
+  width: 100vw;
+  height: 100vh;
+  
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 3.5vw;
+}
+
+#popup #window {
+
+  width: 60vw;
+  height: 40vw;
+
+  opacity: 0.9;
+
+  cursor: default;
+
+  background: rgb(91, 91, 91);
+
+  position: relative;
+}
+
+#popup #window #close {
+  background-color: rgb(255, 80, 80);
+
+  width: 6vw;
+  height: 6vw;
+
+  position: absolute;
+
+  right: -1vw;
+  top: -1vw;
+
+  border-radius: 20%;
+
+  cursor: pointer;
+}
+
+#popup #window #close span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  border-radius: 30px;
+  background: rgb(163, 0, 0);
+}
+
+#popup #window #close span:first-child {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+#popup #window #close span:last-child {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+#popup #window #text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  color: rgb(0, 0, 0);
+}
+
+#popup #window #text section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#popup #window #text #range ul {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+}
+
+#popup #window #text #range ul li {
+  width: 80%;
+  border-bottom: solid 2px black;
+}
+
+#popup #window #text #question ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+
+  width: 70%;
+  justify-content: space-around;
+}
+
+#popup #window #text #question ul li {
+  margin-top: 10px;
+}
+
+
 footer {
 
   font-size: var(--font-default);

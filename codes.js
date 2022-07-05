@@ -124,7 +124,7 @@ function update() {
   const high1 = document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`);
   if(high1 != null) high1.className = "lin-highlight1"
   const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
-  if(high2 != null) hig2.className = "lin-highlight1";
+  if(high2 != null) high2.className = "lin-highlight1";
 
   const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
   weekend.className = "lin-highlight2";

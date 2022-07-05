@@ -30,7 +30,9 @@ function createExamTr(index, subject_list) {
   subject_list.forEach((value) => {
     const td = document.createElement("td");
     td.innerHTML = value[1].name;
-    td.id = `subject-${value[0]}-${index}`
+    td.id = `subject-${value[0]}-${index-1}`;
+    td.onclick = clickSubject;
+
     tr.appendChild(td)
   })
 
@@ -58,3 +60,33 @@ function updateExam() {
   )
 }
 
+const popup = document.getElementById("popup");
+const close = document.getElementById("close");
+
+const keyf = [
+  { transform: 'scale(1)' },
+  { transform: 'scale(1.3)', offset: 0.3},
+  { transform: 'scale(0)' }
+];
+
+close.addEventListener("click", () => {
+  popup.animate(keyf, {
+    duration: 400,
+    fill: "both"
+  });
+})
+
+function clickSubject(event) {
+  const target = event.target;
+  const id = target.id.split("-");
+  const subject = exam_list[id[1]].subject[id[2]];
+
+  console.log(subject)
+
+  popup.animate(keyf, {
+    duration: 400,
+    fill: "both",
+    direction: "reverse"
+  });
+
+}
