@@ -9,6 +9,7 @@
   /* font size */
   --font-size-bolder: 2rem;
   --font-size-bold: 1.5rem;
+  --font-size-small-bold: 1.25rem;
   --font-size-default: 1rem;
 }
 
@@ -115,7 +116,7 @@ main #exam_time_table tbody tr td {
 
 #popup #window {
 
-  width: 70vw;
+  width: 85vw;
 
   padding: var(--font-size-default);
 
@@ -126,6 +127,8 @@ main #exam_time_table tbody tr td {
   background: rgb(91, 91, 91);
 
   position: relative;
+  
+  font-size: var(--font-size-small-bold);
 }
 
 #popup #window #close {
@@ -142,6 +145,7 @@ main #exam_time_table tbody tr td {
   border-radius: 20%;
 
   cursor: pointer;
+
 }
 
 #popup #window #close span {
@@ -182,6 +186,10 @@ main #exam_time_table tbody tr td {
   align-items: center;
 }
 
+#popup #window #text #range {
+  margin-top: var(--font-size-small-bold);
+}
+
 #popup #window #text #range ul {
   list-style: none;
 
@@ -196,7 +204,11 @@ main #exam_time_table tbody tr td {
 #popup #window #text #range ul li {
   width: 80%;
   border-bottom: solid 2px black;
-  font-size: 0.9em;
+
+}
+
+#popup #window #text #question {
+  margin-top: var(--font-size-small-bold);
 }
 
 #popup #window #text #question ul {
