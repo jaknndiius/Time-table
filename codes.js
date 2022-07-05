@@ -83,13 +83,13 @@ function howLongTime(fromHour, fromMinute, toHour, toMinute) {
 
 //[ start hours, start minutes, for]
 const class_start_time = [
-  [8, 00, 80], // Morning time and 1st class (8:00~9:20)
+  [8, 0, 80], // Morning time and 1st class (8:00~9:20)
   [9, 20, 60], // free time and 2nd class (9:20~10:20)
   [10, 20, 60], // free time and 3rd class (10:20~11:20)
   [11, 20, 60], // free time and 4th class (11:20~12:20)
   [12, 20, 100], // lunch time(12:20~13:10) and 5th class(13:10~14:00) (12:20~14:00)
-  [14, 00, 60], // free time and 6th class (14:00~, 15:00)
-  [15, 00, 60]  // free time and 7th class (15:00~, 16:00)
+  [14, 0, 60], // free time and 6th class (14:00~, 15:00)
+  [15, 0, 60]  // free time and 7th class (15:00~, 16:00)
 ]
 
 function getClassIndex(hour, minute) {
