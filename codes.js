@@ -125,7 +125,7 @@ function update() {
   highlight_list.forEach((value) => value.className = "lin-highlight1");
 
   const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
-  weekend.className = "lin-highlight2"
+  weekend.className = "lin-highlight2";
 
   // #next_time update
   document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";

@@ -49,7 +49,7 @@ header #title {
 }
 
 .lin-highlight2 {
-  background: linear-gradient(to right, rgb(26, 87, 255),rgb(172, 39, 255));
+  background: linear-gradient(to right, rgb(26, 87, 255), rgb(172, 39, 255));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
