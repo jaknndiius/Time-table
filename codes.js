@@ -209,7 +209,7 @@ const teacher_name = {
   물리: "김지",
   수2: "유규",
   진국: "마재",
-  창체: "마제"
+  창체: "마재"
 };
 
 const teacher_name_div = document.getElementById("teacher_name");
