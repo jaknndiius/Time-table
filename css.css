@@ -81,6 +81,11 @@ main #time_table {
   min-width: 300px;
 }
 
+main #today_time_table tbody tr td,
+main #time_table tbody tr td{
+  cursor: pointer;
+}
+
 main #teacher_name {
 
   display: none;
