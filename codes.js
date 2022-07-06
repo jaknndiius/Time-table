@@ -36,6 +36,7 @@ function makeTr(idx, addhead) {
   for(let i=0;i<classes.length;i++) {
     const td = document.createElement("td");
     td.innerHTML = `${classes[i]}`;
+    td.onclick = onSubjectTdClicked;
 
     tr.appendChild(td);
   }
@@ -104,6 +105,8 @@ function getClassIndex(hour, minute) {
   return -1; // when the rest of the time
 }
 
+let before_class;
+
 // today table setting
 function update() {
   //get current datetime
@@ -115,23 +118,42 @@ function update() {
   //get current class index
   const current_class = getClassIndex(hours, minutes);
 
-  //tobody append child
-  const to_tbody = document.querySelector("#today_time_table tbody");
-  to_tbody.innerHTML = "";
-  to_tbody.appendChild(makeTr(day))
-  //current class style change
+  if(before_class != current_class) {
+    before_class = current_class
 
-  const high1 = document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`);
-  if(high1 != null) high1.className = "lin-highlight1"
-  const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
-  if(high2 != null) high2.className = "lin-highlight1";
-
-  const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
-  weekend.className = "lin-highlight2";
-
-  // #next_time update
-  if(current_class > 0)
-    document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
+    //tobody append child
+    const to_tbody = document.querySelector("#today_time_table tbody");
+    to_tbody.innerHTML = "";
+    to_tbody.appendChild(makeTr(day))
+    //current class style change
+  
+  
+    //classList reset
+    document.querySelectorAll(`#today_time_table tbody tr td`).forEach(
+      (element) => {
+        element.className = ""
+      }
+    )
+  
+    document.querySelectorAll(`#today_time_table thead tr th`).forEach(
+      (element) => {
+        element.className = ""
+      }
+    )
+  
+    const high1 = document.querySelector(`#today_time_table tbody tr td:nth-child(${current_class})`);
+    if(high1 != null) high1.className = "lin-highlight1"
+    const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
+    if(high2 != null) high2.className = "lin-highlight1";
+  
+    const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
+    weekend.className = "lin-highlight2";
+  
+    // #next_time update
+    if(current_class > 0)
+      document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
+  
+  }
 
   function toSchool(hour, minute, second) {
     const school_hour = 16;
@@ -161,3 +183,60 @@ function update() {
     footer.innerHTML = `하교까지 약 <span>${school_time[0]}</span>시간 = <span>${school_time[1]}</span>분 = <span>${school_time[2]}</span>초 남았다!`
 }
 setInterval(update, 1)
+
+// on teacher name click
+const teacher_name = {
+  수1: "유규",
+  정영: "조혜",
+  체2: "노동",
+  생명: "조민",
+  음악: "지세",
+  국1: "마재",
+  국2: "김병",
+  윤리: "채나",
+  국사: "안미",
+  지리: "이정",
+  영1: "임명",
+  프그: "최준",
+  영2: "김창",
+  화학: "변선",
+  사회: "장재",
+  지학: "김태",
+  실험: "이은",
+  정보: "최준",
+  미술: "권유",
+  체1: "노동",
+  물리: "김지",
+  수2: "유규",
+  진국: "마재",
+  창체: "마제"
+};
+
+const teacher_name_div = document.getElementById("teacher_name");
+
+const keyf_pop = [
+  { opacity: '0', easing: "ease-out"},
+  { opacity: '1', offset: 0.6, easing: "ease-in"}
+];
+
+
+let anim;
+function onSubjectTdClicked(event) {
+  teacher_name_div.innerHTML = teacher_name[event.target.innerHTML] +"* 선생님";
+
+  teacher_name_div.style.display = "block";
+
+  if(anim != null) anim.cancel()
+
+  anim = teacher_name_div.animate(
+    keyf_pop, {
+      duration: 900,
+      fill: "both",
+      iterations: 2,
+      direction: "alternate"
+    }
+  )
+
+  anim.onfinish = () => teacher_name_div.style.display = "none";
+
+}

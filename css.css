@@ -21,6 +21,7 @@
   text-align: center;
   font-weight: bold;
   word-break: keep-all;
+  
 }
 
 body {
@@ -78,6 +79,25 @@ main #time_table {
   margin-top: 20px;
 
   min-width: 300px;
+}
+
+main #teacher_name {
+
+  display: none;
+
+  position: fixed;
+
+  background-color: rgba(128, 128, 128, 0.9);
+  width: 100%;
+
+  height: calc( var(--font-size-small-bold)*3 );
+
+  padding: var(--font-size-small-bold);
+  font-size: var(--font-size-small-bold);
+
+  top: 50%;
+  transform: translateY(-50%);
+
 }
 
 main #exam_time_table {
