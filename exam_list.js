@@ -1,7 +1,7 @@
 'use strict'
 
 let exam_list;
-fetch('https://junaiskind.github.io/Time-table/exam.json')
+fetch('https://jaknndiius.github.io/Time-table/exam.json')
   .then(Response => Response.text())
   .then(text => exam_list = JSON.parse(text))
   .then(t => updateExam());
