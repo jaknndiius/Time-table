@@ -140,9 +140,20 @@ main #exam_time_table tbody tr td {
   backdrop-filter: blur(1.5px);
 }
 
+#popup #background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+
+  top: 0;
+  left: 0;
+
+  cursor: pointer;
+}
+
 #popup #window {
 
-  width: 85vw;
+  width: 85vmin;
 
   padding: var(--font-size-default);
 
@@ -150,47 +161,13 @@ main #exam_time_table tbody tr td {
 
   cursor: default;
 
-  background: rgb(91, 91, 91);
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(69, 69, 69);
+  border-radius: 10px;
 
   position: relative;
   
   font-size: var(--font-size-small-bold);
-}
-
-#popup #window #close {
-  background-color: rgb(255, 80, 80);
-
-  width: 6vw;
-  height: 6vw;
-
-  position: absolute;
-
-  right: -1vw;
-  top: -1vw;
-
-  border-radius: 20%;
-
-  cursor: pointer;
-
-}
-
-#popup #window #close span {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 5px;
-  border-radius: 30px;
-  background: rgb(163, 0, 0);
-}
-
-#popup #window #close span:first-child {
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-}
-
-#popup #window #close span:last-child {
-  bottom: 50%;
-  transform: translateY(50%) rotate(-45deg);
 }
 
 #popup #window #text {
@@ -229,7 +206,7 @@ main #exam_time_table tbody tr td {
 
 #popup #window #text #range ul li {
   width: 80%;
-  border-bottom: solid 2px black;
+  border-bottom: solid 2px rgb(69, 69, 69);
 
 }
 
@@ -242,14 +219,13 @@ main #exam_time_table tbody tr td {
   display: flex;
   flex-direction: row;
 
-  width: 70%;
+  width: 30vmin;
   justify-content: space-around;
 }
 
 #popup #window #text #question ul li {
   margin-top: 10px;
 }
-
 
 footer {
 

@@ -62,7 +62,7 @@ function updateExam() {
 }
 
 const popup = document.getElementById("popup");
-const close = document.getElementById("close");
+const close = document.getElementById("background");
 
 const keyf = [
   { transform: 'scale(1)' },
