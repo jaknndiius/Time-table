@@ -29,10 +29,11 @@ function createExamTr(index, subject_list) {
 
   subject_list.forEach((value) => {
     const td = document.createElement("td");
-    td.innerHTML = value[1].name;
-    td.id = `subject-${value[0]}-${index-1}`;
-    td.onclick = clickSubject;
-
+    if(value != null) {
+      td.innerHTML = value[1].name;
+      td.id = `subject-${value[0]}-${index-1}`;
+      td.onclick = clickSubject;
+    }
     tr.appendChild(td)
   })
 
