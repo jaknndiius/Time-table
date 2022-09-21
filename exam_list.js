@@ -33,6 +33,8 @@ function createExamTr(index, subject_list) {
       td.innerHTML = value[1].name;
       td.id = `subject-${value[0]}-${index-1}`;
       td.onclick = clickSubject;
+    } else {
+      td.innerHTML = "-"
     }
     tr.appendChild(td)
   })
