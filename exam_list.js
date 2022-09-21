@@ -29,7 +29,7 @@ function createExamTr(index, subject_list) {
 
   subject_list.forEach((value) => {
     const td = document.createElement("td");
-    if(value != null && value != undefined) {
+    if(value[1] != null && value[1] != undefined) {
       td.innerHTML = value[1].name;
       td.id = `subject-${value[0]}-${index-1}`;
       td.onclick = clickSubject;
