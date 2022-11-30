@@ -11,15 +11,8 @@ const week_class = [
   []
 ]
 
-function toWeekdayPreiod(index) {
-  if(index <= 0) {
-    index = 1;
-  } else if(index >= 6) {
-    index = 5;
-  }
 
-  return index;
-}
+const toWeekdayPreiod = index => Math.min(Math.max(index, 5), 1);
 
 function makeTr(idx, addhead) {
   const tr = document.createElement("tr");
