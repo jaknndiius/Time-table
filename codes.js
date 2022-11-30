@@ -1,26 +1,22 @@
 'use strict'
 
-const week_name = ["일", "월", "화", "수", "목", "금", "토"]
+const week_name = ["월", "화", "수", "목", "금"]
 const week_class = [
-  [],
   ["수1", "정영", "체2", "창체", "생명", "미술", "국1"],
   ["국2", "윤리", "국사", "지리", "수1", "국1", "영1"],
   ["프그", "영2", "화학", "사회", "창체", "창체", "창체"],
   ["수1", "지학", "국2", "국사", "영1", "실험", "정보"],
-  ["음악", "체1", "물리", "창체", "영2", "수2", "진국"],
-  []
+  ["음악", "체1", "물리", "창체", "영2", "수2", "진국"]
 ]
 
 
-const toWeekdayPreiod = index => Math.min(Math.max(index, 5), 1);
+const toWeekdayPreiod = index => Math.max(Math.min(index, 4), 0);
 
-function makeTr(idx, addhead) {
+function makeTr(idx, addhead=false) {
   const tr = document.createElement("tr");
 
   idx = toWeekdayPreiod(idx);
-
   const classes = week_class[idx];
-
   if(addhead) {
     const th = document.createElement("th");
     th.innerHTML = `${week_name[idx]}요일`;
@@ -41,7 +37,7 @@ function makeTr(idx, addhead) {
 const table = document.querySelector("#time_table");
 const tbody = document.querySelector("#time_table tbody");
 
-for(let i=1;i<6;i++) {
+for(let i=0;i<5;i++) {
   tbody.appendChild(makeTr(i, true));
 }
 
@@ -139,12 +135,11 @@ function update() {
     const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
     if(high2 != null) high2.className = "lin-highlight1";
   
-    const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`)
+    const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`);
     weekend.className = "lin-highlight2";
   
     // #next_time update
-    if(current_class > 0)
-      document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
+    if(current_class > 0) document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
   
   }
 
@@ -209,9 +204,8 @@ const teacher_name_div = document.getElementById("teacher_name");
 
 const keyf_pop = [
   { opacity: '0', easing: "ease-out"},
-  { opacity: '1', offset: 0.6, easing: "ease-in"}
+  { opacity: '1', offset: 0.5, easing: "ease-in"}
 ];
-
 
 let anim;
 function onSubjectTdClicked(event) {
@@ -219,11 +213,11 @@ function onSubjectTdClicked(event) {
 
   teacher_name_div.style.display = "block";
 
-  if(anim != null) anim.cancel()
+  if(anim != null) anim.cancel();
 
   anim = teacher_name_div.animate(
     keyf_pop, {
-      duration: 900,
+      duration: 500,
       fill: "both",
       iterations: 2,
       direction: "alternate"
