@@ -23,7 +23,7 @@ function createExamTr(index, subject_list) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
   th.innerHTML = index + "교시";
-  tr.appendChild(th)
+  tr.appendChild(th);
 
   
 
@@ -34,9 +34,9 @@ function createExamTr(index, subject_list) {
       td.id = `subject-${value[0]}-${index-1}`;
       td.onclick = clickSubject;
     } else {
-      td.innerHTML = "-"
+      td.innerHTML = "-";
     }
-    tr.appendChild(td)
+    tr.appendChild(td);
   })
 
   return tr;
