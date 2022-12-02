@@ -113,7 +113,7 @@ function update() {
     //tobody append child
     const to_tbody = document.querySelector("#today_time_table tbody");
     to_tbody.innerHTML = "";
-    to_tbody.appendChild(makeTr(day))
+    to_tbody.appendChild(makeTr(day+1))
     //current class style change
   
   
