@@ -113,7 +113,7 @@ function update() {
     //tobody append child
     const to_tbody = document.querySelector("#today_time_table tbody");
     to_tbody.innerHTML = "";
-    to_tbody.appendChild(makeTr(day+1))
+    to_tbody.appendChild(makeTr(day))
     //current class style change
   
   
@@ -135,7 +135,7 @@ function update() {
     const high2 = document.querySelector(`#today_time_table thead tr th:nth-child(${current_class})`);
     if(high2 != null) high2.className = "lin-highlight1";
   
-    const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day)})`);
+    const weekend = document.querySelector(`#time_table tbody tr:nth-child(${toWeekdayPreiod(day) + 1})`);
     weekend.className = "lin-highlight2";
   
     // #next_time update
