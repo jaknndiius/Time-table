@@ -1,13 +1,110 @@
 'use strict'
 
 const week_name = ["월", "화", "수", "목", "금"]
+// const week_class = [
+//   ["수1", "정영", "체2", "창체", "생명", "미술", "국1"],
+//   ["국2", "윤리", "국사", "지리", "수1", "국1", "영1"],
+//   ["프그", "영2", "화학", "사회", "창체", "창체", "창체"],
+//   ["수1", "지학", "국2", "국사", "영1", "실험", "정보"],
+//   ["음악", "체1", "물리", "창체", "영2", "수2", "진국"]
+// ]
 const week_class = [
   ["수1", "정영", "체2", "창체", "생명", "미술", "국1"],
   ["국2", "윤리", "국사", "지리", "수1", "국1", "영1"],
   ["프그", "영2", "화학", "사회", "창체", "창체", "창체"],
   ["수1", "지학", "국2", "국사", "영1", "실험", "정보"],
   ["음악", "체1", "물리", "창체", "영2", "수2", "진국"]
-]
+];
+const cla = [
+  [Lit1, Eng2, Math1, Creaty, Math2, Music, Explor2],
+  [Explor1, Explor1, Math3, PE, Human, Lit2, Eng1],
+  [History, Math1, Art, Math2, Creaty, Creaty, Creaty],
+  [Lit2, Math2, Explor2, Explor2, Lit1, Foregin, Eng3],
+  [Eng1, Lit3, Eng2, Creaty, Explor1, Math1, Music]
+];
+
+const makeTable = (id, caption, head, body) => {
+  const table = document.createElement('table');
+  table.id = id;
+  
+  const captionBox = document.createElement('caption');
+  captionBox.textContent = caption;
+
+  table.appendChild(captionBox);
+  table.appendChild(head);
+  table.appendChild(body);
+
+  return table;
+}
+
+const SimpleTable = {
+  makeHead: function() {
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+    for(let i=0;i<7;i++) {
+      const th = document.createElement('th');
+      th.textContent = (i+1) + '교시';
+      tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+    return thead;
+  },
+  makeBody: function(week_index) {
+    const tbody = document.createElement('tbody');
+    const tr = document.createElement('tr');
+    cla[week_index].forEach(sub => {
+      const td = document.createElement('td');
+      td.textContent = sub + '';
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+    return tbody;
+  },
+  make: function(week_index) {
+    return makeTable('today_time_table', '오늘의 시간표', this.makeHead(), this.makeBody(week_index));
+  }
+};
+
+const MainTable = {
+  makeRow: function(week_index, subjects) {
+    const tr = document.createElement('tr');
+    const th = document.createElement('th');
+    th.textContent = week_name[week_index] + '요일';
+    tr.appendChild(th);
+    subjects.forEach(sub => {
+      const td = document.createElement('td');
+      td.textContent = sub + '';
+      tr.appendChild(td);
+    });
+    return tr;
+  },
+  makeHead: function() {
+    const thead = document.createElement('thead');
+    const tr = document.createElement('tr');
+    tr.appendChild(
+      document.createElement('th'));
+    for(let i=0;i<7;i++) {
+      const th = document.createElement('th');
+      th.textContent = (i+1) + '교시';
+      tr.appendChild(th);
+    }
+    thead.appendChild(tr);
+    return thead;
+  },
+  makeBody: function() {
+    const tbody = document.createElement('tbody');
+    for(let i=0;i<5;i++) {
+      tbody.appendChild(
+        this.makeRow(i, cla[i]));
+    }
+    return tbody;
+  },
+  make: function() {
+    return makeTable('time_table', 'Time Table', this.makeHead(), this.makeBody());
+  }
+};
+
+const ExamTable = {};
 
 
 const toWeekdayPreiod = index => Math.max(Math.min(index, 4), 0);
@@ -113,7 +210,7 @@ function update() {
     //tobody append child
     const to_tbody = document.querySelector("#today_time_table tbody");
     to_tbody.innerHTML = "";
-    to_tbody.appendChild(makeTr(day))
+    to_tbody.appendChild(makeTr(day));
     //current class style change
   
   

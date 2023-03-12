@@ -9,9 +9,13 @@
     <link rel="stylesheet" href="css.css">
 
     <title>TIME TABLE</title>
+    <script src="subjects.js" defer></script>
+    <script src="new.js" defer></script>
+    <!-- <script src="codes.js" defer></script> -->
 
-    <script src="codes.js" defer></script>
-    <script src="exam_list.js" defer></script>
+    <!-- <script src="exam_list.js" defer></script> -->
+
+    
 </head>
 <body>
 
@@ -19,7 +23,9 @@
     <header>
         <p id="title" class="lin">&lt Time Table &gt</p>
     </header>
+    <div id="teacher_name">
 
+    </div>
     <main>
         <p id="next_time" class="lin"></p>
         <table id="today_time_table">
@@ -56,9 +62,7 @@
             </tbody>
         </table>
         
-        <div id="teacher_name">
-
-        </div>
+        
 
         <table id="exam_time_table">
             <caption>시험 시간표</caption>

@@ -86,7 +86,7 @@ main #time_table tbody tr td{
   cursor: pointer;
 }
 
-main #teacher_name {
+#teacher_name {
 
   display: none;
 
