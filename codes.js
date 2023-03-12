@@ -236,7 +236,7 @@ function update() {
     weekend.className = "lin-highlight2";
   
     // #next_time update
-    if(current_class > 0) document.getElementById("next_time").innerHTML = "다음시간: " + current_class + "교시";
+    if(current_class > 0) document.getElementById("next_time").innerHTML = current_class + "교시";
   
   }
 
