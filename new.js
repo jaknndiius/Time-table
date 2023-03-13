@@ -10,45 +10,76 @@ const cla = [
   [Eng1, Lit3, Eng2, Creaty, Explor1, Math1, Music]
 ];
 
-const makeTable = (tableObject, args) => {
+const reloadTable = (tableObject, args) => {
 
-  const table = document.createElement('table');
-  table.id = tableObject.id;
-  
+  const table = document.querySelector('#' + tableObject.id);
+  const inner = [];
   const captionBox = document.createElement('caption');
   captionBox.textContent = tableObject.caption;
 
-  table.appendChild(captionBox);
-  table.appendChild(tableObject.makeHead(args));
-  table.appendChild(tableObject.makeBody(args));
+  inner.push(
+    captionBox,
+    tableObject.makeHead(args),
+    tableObject.makeBody(args));
 
+  table.replaceChildren(...inner);
   return table;
 }
 
-const keyf_pop = [
-  { opacity: '0', easing: "ease-out"},
-  { opacity: '1', offset: 0.5, easing: "ease-in"}
-];
-const onSubjectTdClicked = (teacher) => {
+class Table {
+  constructor(id, caption) {
+    this.id = id;
+    this.caption = caption;
+  }
 
-  const teacher_name_div = document.getElementById("teacher_name");
-  teacher_name_div.textContent = teacher + ' 선생님'
-  teacher_name_div.getAnimations().forEach(animation => animation.cancel());
-  teacher_name_div.style.display = "block";
-  teacher_name_div.animate(
-    keyf_pop, {
-      duration: 500,
-      fill: "both",
-      iterations: 2,
-      direction: "alternate"
-    }
-  ).onfinish = () => teacher_name_div.style.display = "none";
+  makeClickableSubject(subject_name) {
+    const p = document.createElement('p');
+    p.classList.add('subject_name');
+    p.textContent = subject_name;
+    p.onclick = (event) => this.onSubjectTdClicked(event.target);
+    return p;
+  }
+  makeClickableTeacher(teacher_name) {
+    const p = document.createElement('p');
+    p.classList.add('teacher_name');
+    p.textContent = teacher_name;
+    p.style.display = 'none';
+    p.onclick = (event) => this.onTeacherTdClicked(event.target);
+    return p;
+  }
+
+  onSubjectTdClicked(subjectTd) {
+    const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
+    subjectTd.style.display = 'none';
+    teacherTd.style.display = 'block';
+  }
+  onTeacherTdClicked(teacherTd) {
+    const subjectTd = teacherTd.parentElement.querySelector('.subject_name');
+    teacherTd.style.display = 'none';
+    subjectTd.style.display = 'block';
+  }
+
+  makeHead() {}
+  makeBody() {}
+
+  reload(head, body) {
+    const table = document.querySelector('#' + this.id);
+    const inner = [];
+    const captionBox = document.createElement('caption');
+    captionBox.textContent = this.caption;
+  
+    inner.push(captionBox, head, body);
+  
+    table.replaceChildren(...inner);
+    return table;
+  }
 }
 
-const SimpleTable = {
-  id: 'today_time_table',
-  caption: '오늘의 시간표',
-  makeHead: function({current_class}) {
+class SimpleTable extends Table {
+  constructor() {
+    super('today_time_table', '오늘의 시간표');
+  }
+  makeHead(current_class) {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
     for(let i=0;i<7;i++) {
@@ -59,26 +90,37 @@ const SimpleTable = {
     }
     thead.appendChild(tr);
     return thead;
-  },
-  makeBody: function({week_index, current_class}) {
+  }
+  makeBody(week_index, current_class) {
     const tbody = document.createElement('tbody');
     const tr = document.createElement('tr');
     cla[week_index].forEach((sub, idx) => {
       const td = document.createElement('td');
-      td.textContent = sub + '';
-      td.onclick = () => onSubjectTdClicked(sub.teacher);
       if(idx == current_class-1) td.classList.add('lin-highlight1');
+
+      const subject_name_p = this.makeClickableSubject(sub + '');
+      const teacher_name_p = this.makeClickableTeacher(sub.teacher);
+
+      td.appendChild(subject_name_p);
+      td.appendChild(teacher_name_p);
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
     return tbody;
   }
-};
+  reload(week_index, current_class) {
+    super.reload(
+      this.makeHead(current_class),
+      this.makeBody(week_index, current_class));
+  }
+}
 
-const MainTable = {
-  id: 'time_table',
-  caption: 'Time Table',
-  makeRow: function(week_index, subjects, highlight) {
+class MainTable extends Table {
+  constructor() {
+    super('time_table', 'Time Table');
+  }
+
+  makeRow(week_index, subjects, highlight) {
     const tr = document.createElement('tr');
     if(highlight) tr.classList.add('lin-highlight2');
 
@@ -87,17 +129,17 @@ const MainTable = {
     tr.appendChild(th);
     subjects.forEach(sub => {
       const td = document.createElement('td');
-      td.textContent = sub + '';
-      td.onclick = () => onSubjectTdClicked(sub.teacher);
+
+      td.appendChild(this.makeClickableSubject(sub + ''));
+      td.appendChild(this.makeClickableTeacher(sub.teacher));
       tr.appendChild(td);
     });
     return tr;
-  },
-  makeHead: function() {
+  }
+  makeHead() {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
-    tr.appendChild(
-      document.createElement('th'));
+    tr.appendChild(document.createElement('th'));
     for(let i=0;i<7;i++) {
       const th = document.createElement('th');
       th.textContent = (i+1) + '교시';
@@ -105,8 +147,8 @@ const MainTable = {
     }
     thead.appendChild(tr);
     return thead;
-  },
-  makeBody: function({week_index}) {
+  }
+  makeBody(week_index) {
     const tbody = document.createElement('tbody');
     for(let i=0;i<5;i++) {
       tbody.appendChild(
@@ -114,14 +156,14 @@ const MainTable = {
     }
     return tbody;
   }
-};
+  reload(week_index) {
+    super.reload(
+      this.makeHead(),
+      this.makeBody(week_index));
+  }
+}
 
-const ExamTable = {
-  id: '',
-  caption: '',
-  makeHead: function() {},
-  makeBody: function() {}
-};
+class ExamTable extends Table {}
 
 const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
 
@@ -152,21 +194,29 @@ function getClassIndex(hour, minute) {
   return return_index;
 }
 
-function updateMainScreen(week_index, current_class) {
-  const main = document.querySelector('main');
-  const inner = [];
+const Previouis = {
+  current_class: -100,
+  week_index: -100,
+};
 
-  const p = document.createElement('p');
-  p.id = 'text_time';
-  p.classList.add('lin');
-  if(current_class > 0) p.textContent = `>> ${current_class}교시 <<`;
-  inner.push(p);
-  inner.push(
-    makeTable(SimpleTable, {week_index: week_index, current_class: current_class}),
-    makeTable(MainTable, {week_index: week_index}),
-    // makeTable(ExamTable)
-  );
-  main.replaceChildren(...inner);
+const simpleT = new SimpleTable();
+const mainT = new MainTable();
+
+function updateMainScreen(week_index, current_class) {
+
+  if(current_class != Previouis.current_class) {
+    if(current_class > 0)
+      document.querySelector('#text_time').textContent = `>> ${current_class}교시 <<`;
+
+    simpleT.reload(week_index, current_class);
+    Previouis.current_class = current_class;
+  }
+
+  if(week_index != Previouis.week_index) {
+    mainT.reload(week_index);
+    Previouis.week_index = week_index;
+  }
+
 }
 
 function getDate() {
@@ -187,6 +237,7 @@ function render() {
   updateMainScreen(week_index, current_class);
   updateSchoolTimeBar(time);
 }
+
 const school_time = { hours: 16, minutes: 0, seconds: 0 }
 function updateSchoolTimeBar({hours, minutes, seconds}) {
   const fix = number => number.toFixed(1);
@@ -197,8 +248,9 @@ function updateSchoolTimeBar({hours, minutes, seconds}) {
     const untill_second = school_time.seconds - seconds;
     return untill_hour*3600 + untill_minute*60 + untill_second;
   })();
-  if (sum_time >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
+  // if (sum_time >= 0)
+  footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
 }
 
 render()
-setInterval(render, 1000);
+setInterval(render, 1);

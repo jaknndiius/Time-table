@@ -312,14 +312,14 @@ function onSubjectTdClicked(event) {
 
   if(anim != null) anim.cancel();
 
-  anim = teacher_name_div.animate(
-    keyf_pop, {
-      duration: 500,
-      fill: "both",
-      iterations: 2,
-      direction: "alternate"
-    }
-  )
+  // anim = teacher_name_div.animate(
+  //   keyf_pop, {
+  //     duration: 500,
+  //     fill: "both",
+  //     iterations: 2,
+  //     direction: "alternate"
+  //   }
+  // )
 
   anim.onfinish = () => teacher_name_div.style.display = "none";
 

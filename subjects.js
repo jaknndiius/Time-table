@@ -1,33 +1,22 @@
 class Subject {
-
   constructor(name, teacher) {
     this.name = name;
     this.teacher = teacher;
   }
-
   toString() {
     return this.name;
   }
 }
-
 class MultipleSubject extends Subject {
   constructor(name, teacher, suffix) {
     super(name, teacher);
     this.suffix = suffix;
   }
-
   toString() { return this.name[0] + this.suffix; }
-
 }
-
 class ExplorSubject extends MultipleSubject {
   toString() { return this.name + this.suffix; }
 }
-
-// class Test {
-//   constructor(range)
-// }
-
 // 문학
 Lit1 = new MultipleSubject('문학', '윤동희', '1');
 Lit2 = new MultipleSubject('문학', '신치훈', '2');
@@ -57,4 +46,4 @@ Art = new Subject('미술', '권유정');
 Foregin = new Subject('일본어', '김희인');
 // Chinese = new Subject('중국어', '배슬기');
 // 창체
-Creaty = new Subject('창체', '담임');
+Creaty = new Subject('창체', '장인석');

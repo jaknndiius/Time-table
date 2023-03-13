@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link type="image/x-icon" rel="shortcut icon" href="images/fly.png">
-    <link rel="stylesheet" href="css.css">
+  <link type="image/x-icon" rel="shortcut icon" href="images/fly.png">
+  <link rel="stylesheet" href="css.css">
 
-    <title>TIME TABLE</title>
-    <script src="subjects.js" defer></script>
-    <script src="new.js" defer></script>
-    <!-- <script src="codes.js" defer></script> -->
-    <!-- <script src="exam_list.js" defer></script> -->
-
+  <title>TIME TABLE</title>
+  <script src="subjects.js" defer></script>
+  <script src="new.js" defer></script>
+  <!-- <script src="codes.js" defer></script> -->
+  <!-- <script src="exam_list.js" defer></script> -->
 </head>
 <body>
-    <header>
-        <p id="title" class="lin">&lt Time Table &gt</p>
-    </header>
-    <div id="teacher_name">
+  <header>
+    <p id="title" class="lin">&lt Time Table &gt</p>
+  </header>
+  <div id="teacher_name"></div>
+  <main>
 
+    <p class="lin" id="text_time"></p>
+    <table id="today_time_table"></table>
+    <table id="time_table"></table>
+
+    <!-- <table id="exam_time_table">
+      <caption>시험 시간표</caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th>첫쨋날</th>
+          <th>둘쨋날</th>
+          <th>셋쨋날</th>
+          <th>넷쨋날</th>
+        </tr>
+        <tr id="exam_day_head">
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="exam_time_table_tbody">
+      </tbody>
+    </table> -->
+  </main>
+  <!-- <div id="popup">
+    <div id="background"></div>
+    <div id="window">
+      <div id="text">
+        <p id="title"></p>
+        <section id="range">
+          <p>&lt 범위 &gt</p>
+          <ul></ul>
+        </section>
+
+        <section id="question">
+          <p>&lt 문항 수 &gt</p>
+          <ul>
+            <li></li>
+            <li></li>
+          </ul>
+        </section>
+      </div>
     </div>
-    <main>
-        <!-- <table id="exam_time_table">
-            <caption>시험 시간표</caption>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>첫쨋날</th>
-                    <th>둘쨋날</th>
-                    <th>셋쨋날</th>
-                    <th>넷쨋날</th>
-                </tr>
-                <tr id="exam_day_head">
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="exam_time_table_tbody">
-            </tbody>
-        </table> -->
-    </main>
-
-    <!-- <div id="popup">
-        <div id="background"></div>
-        <div id="window">
-            <div id="text">
-                <p id="title"></p>
-                <section id="range">
-                    <p>&lt 범위 &gt</p>
-                    <ul></ul>
-                </section>
-
-                <section id="question">
-                    <p>&lt 문항 수 &gt</p>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </section>
-            </div>
-        </div>
-    </div> -->
-
-    <footer>
-        <p id="footer"></p>
-    </footer>
-
+  </div> -->
+  <footer>
+    <p id="footer"></p>
+  </footer>
 </body>
 </html>

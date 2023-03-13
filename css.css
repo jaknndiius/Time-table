@@ -44,13 +44,15 @@ header #title {
   -webkit-text-fill-color: transparent;
 }
 
-.lin-highlight1 {
+th.lin-highlight1,
+.lin-highlight1 p {
   background: linear-gradient(to right, rgb(76, 213, 13), rgb(0, 235, 184));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.lin-highlight2 {
+.lin-highlight2 th,
+.lin-highlight2 td p {
   background: linear-gradient(to right, rgb(26, 87, 255), rgb(172, 39, 255));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -61,7 +63,6 @@ main {
   flex-direction: column;
 
   align-items: center;
-
 }
 
 main #next_time {
@@ -82,11 +83,18 @@ main #time_table {
 }
 
 main #today_time_table tbody tr td,
-main #time_table tbody tr td{
+main #time_table tbody tr td {
+  position: relative;
   cursor: pointer;
+  width: 40px;
+  height: 20px;
+}
+main #time_table tbody tr th{
+  width: 40px;
+  height: 20px;
 }
 
-#teacher_name {
+/* #teacher_name {
 
   display: none;
 
@@ -103,6 +111,14 @@ main #time_table tbody tr td{
   top: 50%;
   transform: translateY(-50%);
 
+} */
+.subject_name,
+.teacher_name {
+  width: 40px;
+  height: 20px;
+
+  position: absolute;
+  top: 0; left: 0;
 }
 
 main #exam_time_table {
