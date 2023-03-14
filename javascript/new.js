@@ -11,17 +11,11 @@ const subjects_by_time = [
 ];
 
 class Table {
-  constructor(id, caption) {
-    this.id = id;
-    this.caption = caption;
-  }
-
   createElementWithText(tag, textContent) {
     const element = document.createElement(tag);
     element.textContent = textContent;
     return element;
   }
-
   onSubjectTdClicked(subjectTd) {
     const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
     subjectTd.style.display = 'none';
@@ -32,7 +26,6 @@ class Table {
     teacherTd.style.display = 'none';
     subjectTd.style.display = 'block';
   }
-
   makeClickableSubject(subject_name) {
     const p = this.createElementWithText('p', subject_name);
     p.classList.add('subject_name');
@@ -46,7 +39,6 @@ class Table {
     p.onclick = (event) => this.onTeacherTdClicked(event.target);
     return p;
   }
-
   makeClickableTd(subject_name, teacher_name) {
     const td = document.createElement('td');
 
@@ -55,23 +47,22 @@ class Table {
 
     return td;
   }
-
   makeHead() {}
   makeBody() {}
-
-  reload(head, body) {
-    const table = document.querySelector('#' + this.id);
-    table.replaceChildren(
-      this.createElementWithText('caption', this.caption),
-      head,
-      body);
-    return table;
-  }
 }
 
 class SimpleTable extends Table {
+  static id = 'today_time_table';
+  static caption = '오늘의 시간표';
   constructor() {
-    super('today_time_table', '오늘의 시간표');
+    if(SimpleTable.instance) throw new Error('alreay instantiated class.');
+    // super('today_time_table', '오늘의 시간표');
+    super();
+    SimpleTable.instance = this;
+  }
+  static getInstance() {
+    if(!this.instance) this.instance = new SimpleTable();
+    return this.instance;
   }
   makeHead(current_class) {
     const thead = document.createElement('thead');
@@ -95,18 +86,28 @@ class SimpleTable extends Table {
     tbody.appendChild(tr);
     return tbody;
   }
-  reload(week_index, current_class) {
-    super.reload(
-      this.makeHead(current_class),
-      this.makeBody(week_index, current_class));
+  static reload(week_index, current_class) {
+    const instance = SimpleTable.getInstance();
+    const table = document.querySelector('#' + SimpleTable.id);
+    table.replaceChildren(
+      instance.createElementWithText('caption', SimpleTable.caption),
+      instance.makeHead(current_class),
+      instance.makeBody(week_index, current_class));
   }
 }
 
 class MainTable extends Table {
+  static id = 'time_table';
+  static caption = 'Time Table';
   constructor() {
-    super('time_table', 'Time Table');
+    if(MainTable.instance) throw new Error('alreay instantiated class.');
+    super();
+    MainTable.instance = this;
   }
-
+  static getInstance() {
+    if(!this.instance) this.instance = new MainTable();
+    return this.instance;
+  }
   makeRow(week_index, subjects, highlight) {
     const tr = document.createElement('tr');
     if(highlight) tr.classList.add('lin-highlight2');
@@ -135,16 +136,29 @@ class MainTable extends Table {
     }
     return tbody;
   }
-  reload(week_index) {
-    super.reload(
-      this.makeHead(),
-      this.makeBody(week_index));
+
+  static reload(week_index) {
+    const instance = MainTable.getInstance();
+    const table = document.querySelector('#' + MainTable.id);
+    table.replaceChildren(
+      instance.createElementWithText('caption', MainTable.caption),
+      instance.makeHead(),
+      instance.makeBody(week_index));
   }
 }
 
 class ExamTable extends Table {
+
+  static id = 'exam_time_table';
+  static caption = '시험 시간표';
   constructor() {
-    super('exam_time_table', '시험 시간표');
+    if(ExamTable.instance) throw new Error('alreay instantiated class.');
+    super();
+    ExamTable.instance = this;
+  }
+  static getInstance() {
+    if(!this.instance) this.instance = new ExamTable();
+    return this.instance;
   }
 
   korean_day = ['첫째날', '둘째날', '셋째날', '넷째날'];
@@ -174,10 +188,12 @@ class ExamTable extends Table {
     main.appendChild(range_ul);
     const questions_number_ul = document.createElement('ul');
     questions_number_ul.id = 'questions_number';
-    questions_number_ul.appendChild(
-      this.createElementWithText('li', `객관식 ${exam.selective}개`));
-    questions_number_ul.appendChild(
-      this.createElementWithText('li', `서술형 ${exam.descriptive}개`));
+    exam.selective > 0 &&
+      questions_number_ul.appendChild(
+        this.createElementWithText('li', `객관식 ${exam.selective}개`));
+    exam.descriptive > 0 &&
+      questions_number_ul.appendChild(
+        this.createElementWithText('li', `서술형 ${exam.descriptive}개`));
     main.appendChild(questions_number_ul);
     text_div.appendChild(main);
 
@@ -225,25 +241,26 @@ class ExamTable extends Table {
 
     exams_by_time.forEach((exams, index) => {
       const tr = document.createElement('tr');
-
       tr.appendChild(
         this.createElementWithText('td', (index+1) + '교시'));
-
       for(const exam of exams) {
         const td = this.createElementWithText('td', exam.name);
         td.onclick = () => this.onExamTdClicked(exam);
         tr.appendChild(td);
       }
-        
       tbody.appendChild(tr);
     });
 
     return tbody;
   }
-  reload(exam_list) {
-    super.reload(
-      this.makeHead(exam_list),
-      this.makeBody(exam_list));
+
+  static reload(exam_list) {
+    const instance = ExamTable.getInstance();
+    const table = document.querySelector('#' + ExamTable.id);
+    table.replaceChildren(
+      instance.createElementWithText('caption', ExamTable.caption),
+      instance.makeHead(exam_list),
+      instance.makeBody(exam_list));
   }
 }
 
@@ -281,22 +298,18 @@ const Previouis = {
   week_index: -100,
 };
 
-const simpleT = new SimpleTable();
-const mainT = new MainTable();
-const examT = new ExamTable();
-
 function updateMainScreen(week_index, current_class) {
 
   if(current_class != Previouis.current_class) {
     if(current_class > 0)
       document.querySelector('#text_time').textContent = `>> ${current_class}교시 <<`;
 
-    simpleT.reload(week_index, current_class);
+    SimpleTable.reload(week_index, current_class);
     Previouis.current_class = current_class;
   }
 
   if(week_index != Previouis.week_index) {
-    mainT.reload(week_index);
+    MainTable.reload(week_index);
     Previouis.week_index = week_index;
   }
 
@@ -335,7 +348,7 @@ function updateSchoolTimeBar({hours, minutes, seconds}) {
 }
 
 function onLoadFinished(exam_list) {
-  examT.reload(exam_list);
+  ExamTable.reload(exam_list);
   setInterval(render, 1);
 }
 
