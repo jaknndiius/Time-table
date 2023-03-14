@@ -41,10 +41,8 @@ class Table {
   }
   makeClickableTd(subject_name, teacher_name) {
     const td = document.createElement('td');
-
     td.appendChild(this.makeClickableSubject(subject_name));
     td.appendChild(this.makeClickableTeacher(teacher_name));
-
     return td;
   }
   makeHead() {}
@@ -198,14 +196,11 @@ class ExamTable extends Table {
     text_div.appendChild(main);
 
     popup_div.appendChild(text_div);
-
     return popup_div;
   }
-
   onExamTdClicked(exam) {
     document.querySelector('#main').appendChild(
-      this.makeModalWindow(exam)
-    );
+      this.makeModalWindow(exam));
   }
   makeHead(exam_list) {
     const thead = document.createElement('thead');
@@ -228,7 +223,6 @@ class ExamTable extends Table {
   }
   makeBody(exam_list) {
     const tbody = document.createElement('tbody');
-
     const exams_by_time = [];
     for(const {subject: subjects} of exam_list) {
       subjects.forEach((subject, index) => {
@@ -238,7 +232,6 @@ class ExamTable extends Table {
         exams_by_time[index].push(subject);
       });
     }
-
     exams_by_time.forEach((exams, index) => {
       const tr = document.createElement('tr');
       tr.appendChild(
@@ -250,7 +243,6 @@ class ExamTable extends Table {
       }
       tbody.appendChild(tr);
     });
-
     return tbody;
   }
 
@@ -263,16 +255,14 @@ class ExamTable extends Table {
       instance.makeBody(exam_list));
   }
 }
-
 const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
 
-function getElapsedTime(fromHour, fromMinute, toHour, toMinute) {
+const getElapsedTime = (fromHour, fromMinute, toHour, toMinute) => {
   const h = toHour - fromHour;
   const m = toMinute - fromMinute;
   const now = (h*60) + m;
   return now;
 }
-
 //[start hours, start minutes, duration]
 const class_times = [
   [8, 0, 80], // Morning time and 1st class (8:00~9:20)
@@ -284,7 +274,7 @@ const class_times = [
   [15, 0, 60]  // free time and 7th class (15:00~, 16:00)
 ]
 
-function getClassIndex(hour, minute) {
+const getClassIndex = (hour, minute) => {
   let return_index = -1;
   class_times.forEach(([start_hour, start_minutes, duration], index) => {
     const pre = getElapsedTime(start_hour, start_minutes, hour, minute);
@@ -293,29 +283,21 @@ function getClassIndex(hour, minute) {
   return return_index;
 }
 
-const Previouis = {
-  current_class: -100,
-  week_index: -100,
-};
+const Previouis = { current_class: -100, week_index: -100 };
 
-function updateMainScreen(week_index, current_class) {
-
+const updateMainScreen = (week_index, current_class) => {
   if(current_class != Previouis.current_class) {
     if(current_class > 0)
       document.querySelector('#text_time').textContent = `>> ${current_class}교시 <<`;
-
     SimpleTable.reload(week_index, current_class);
     Previouis.current_class = current_class;
   }
-
   if(week_index != Previouis.week_index) {
     MainTable.reload(week_index);
     Previouis.week_index = week_index;
   }
-
 }
-
-function getDate() {
+const getDate = () => {
   const date = new Date();
   return {
     day: date.getDay(),
@@ -325,7 +307,7 @@ function getDate() {
   };
 }
 
-function render() {
+const render = () => {
   const time = getDate();
   const week_index = toWeekdayPreiod(time.day);
   const current_class = getClassIndex(time.hours, time.minutes);
@@ -335,7 +317,7 @@ function render() {
 }
 
 const school_time = { hours: 16, minutes: 0, seconds: 0 }
-function updateSchoolTimeBar({hours, minutes, seconds}) {
+const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
   const fix = number => number.toFixed(1);
   const footer = document.getElementById("footer");
   const sum_time = (function() {
@@ -347,7 +329,7 @@ function updateSchoolTimeBar({hours, minutes, seconds}) {
   if (sum_time >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
 }
 
-function onLoadFinished(exam_list) {
+const onLoadFinished = exam_list => {
   ExamTable.reload(exam_list);
   setInterval(render, 1);
 }
