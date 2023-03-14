@@ -1,11 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
-
 :root {
-
   /* font */
   --font-default: sans-serif;
   --font-poor-story: 'Poor Story', var(--font-default);
-
   /* font size */
   --font-size-bolder: 2rem;
   --font-size-bold: 1.5rem;
@@ -13,76 +10,55 @@
   --font-size-default: 1rem;
   --font-size-small: 0.85rem;
 }
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
   text-align: center;
   font-weight: bold;
   word-break: keep-all;
-  
 }
-
 body {
   font-family: var(--font-poor-story);
-
   user-select: none;
 }
-
 header #title {
-
   font-size: var(--font-size-bolder);
-
   padding: var(--font-size-bolder);
-
 }
-
 .lin {
   background: linear-gradient(to right, rgb(255, 0, 0), rgb(255, 213, 46));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 th.lin-highlight1,
 .lin-highlight1 p {
   background: linear-gradient(to right, rgb(76, 213, 13), rgb(0, 235, 184));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .lin-highlight2 th,
 .lin-highlight2 td p {
   background: linear-gradient(to right, rgb(26, 87, 255), rgb(172, 39, 255));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 #main {
   display: flex;
   flex-direction: column;
-
   align-items: center;
 }
-
 #main #next_time {
   font-size: var(--font-size-bold);
 }
-
 #main #today_time_table {
   margin-top: 20px;
-
   min-width: 300px;
 }
-
 #main #time_table {
-
   margin-top: 20px;
-
   min-width: 300px;
 }
-
 #main #today_time_table tbody tr td,
 #main #time_table tbody tr td {
   position: relative;
@@ -94,155 +70,110 @@ th.lin-highlight1,
   width: 40px;
   height: 20px;
 }
-
 .subject_name,
 .teacher_name {
   width: 40px;
   height: 20px;
-
   position: absolute;
   top: 0; left: 0;
 }
-
 #main #exam_time_table {
-  
   margin-top: 40px;
   min-width: 300px;
 }
-
 #main #exam_time_table thead tr:first-child {
   color: rgb(110, 110, 110);
 }
-
 #main #exam_time_table tbody tr td {
   cursor: pointer;
 }
-
 #popup {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-color: rgba(96, 96, 96, 0.79);
-
 }
-
-
 #popup .text {
   width: 90%;
   max-width: 450px;
   background-color: white;
   border: 1px solid rgb(96, 96, 96);
   border-radius: 5px;
-
   padding: var(--font-size-default);
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-
 #popup .text header {
   width: 100%;
   height: 25px;
   border-bottom: 1px solid rgb(96, 96, 96);
-  
   display: flex;
-
   justify-content: space-between;
   box-sizing: content-box;
   padding-bottom: 3px;
 }
-
 #popup .text header div {
   font-size: var(--font-size-small-bold);
   text-align: start;
-
 }
-
 #popup .text header button {
   width: 25px;
   height: 25px;
-
-  /* color: rgb(128, 128, 128); */
-
   border: none;
   background-color: transparent;
   cursor: pointer;
-
   position: relative;
-
   transform: all .3;
-
 }
-
 #popup .text header button:hover {
   transform: scale(0.85);
 }
-
 #popup .text header button div {
-
   width: 15px;
   height: 2px;
   border-radius: 10px;
   background-color: rgb(128, 128, 128);
-
   position: absolute;
   top: 50%;
   left: 50%;
 }
-
 #popup .text header button div:first-child {
   transform: translate(-50%, -50%) rotate(48deg);
-
 }
-
 #popup .text header button div:last-child {
   transform: translate(-50%, -50%) rotate(132deg);
-
 }
-
 #popup .text main ul {
   margin-top: var(--font-size-small);
 }
-
 #popup .text main ul#range {
   list-style: '👉 ';
   margin-left: var(--font-size-bold);
   font-size: var(--font-size-default);
 }
-
 #popup .text main ul#questions_number {
   list-style: '✔ ';
-
   margin-left: var(--font-size-small);
   font-size: var(--font-size-small);
-
   width: 140px;
-
   display: flex;
   justify-content: space-between;
 }
-
 #popup .text main ul#range li {
   text-align: start;
 }
-
 footer {
-
   font-size: var(--font-default);
-
   position: fixed;
   bottom: calc(var(--font-size-default) * 0.75);
   background-color: white;
   width: 100%;
 }
-
 footer span {
   color: red;
 }
