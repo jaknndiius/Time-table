@@ -11,6 +11,7 @@
   --font-size-bold: 1.5rem;
   --font-size-small-bold: 1.25rem;
   --font-size-default: 1rem;
+  --font-size-small: 0.85rem;
 }
 
 * {
@@ -58,60 +59,42 @@ th.lin-highlight1,
   -webkit-text-fill-color: transparent;
 }
 
-main {
+#main {
   display: flex;
   flex-direction: column;
 
   align-items: center;
 }
 
-main #next_time {
+#main #next_time {
   font-size: var(--font-size-bold);
 }
 
-main #today_time_table {
+#main #today_time_table {
   margin-top: 20px;
 
   min-width: 300px;
 }
 
-main #time_table {
+#main #time_table {
 
   margin-top: 20px;
 
   min-width: 300px;
 }
 
-main #today_time_table tbody tr td,
-main #time_table tbody tr td {
+#main #today_time_table tbody tr td,
+#main #time_table tbody tr td {
   position: relative;
   cursor: pointer;
   width: 40px;
   height: 20px;
 }
-main #time_table tbody tr th{
+#main #time_table tbody tr th{
   width: 40px;
   height: 20px;
 }
 
-/* #teacher_name {
-
-  display: none;
-
-  position: fixed;
-
-  background-color: rgba(128, 128, 128, 0.9);
-  width: 100%;
-
-  height: calc( var(--font-size-small-bold)*3 );
-
-  padding: var(--font-size-small-bold);
-  font-size: var(--font-size-small-bold);
-
-  top: 50%;
-  transform: translateY(-50%);
-
-} */
 .subject_name,
 .teacher_name {
   width: 40px;
@@ -121,126 +104,133 @@ main #time_table tbody tr th{
   top: 0; left: 0;
 }
 
-main #exam_time_table {
+#main #exam_time_table {
   
   margin-top: 40px;
   min-width: 300px;
 }
 
-main #exam_time_table thead tr:first-child {
+#main #exam_time_table thead tr:first-child {
   color: rgb(110, 110, 110);
 }
 
-main #exam_time_table tbody tr td {
+#main #exam_time_table tbody tr td {
   cursor: pointer;
 }
-
 
 #popup {
   position: fixed;
-
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  
-  top: 0;
-  left: 0;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  font-size: 3.5vw;
+  background-color: rgba(96, 96, 96, 0.79);
 
-  transform: scale(0);
-
-  backdrop-filter: blur(1.5px);
 }
 
-#popup #background {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
 
-  top: 0;
-  left: 0;
-
-  cursor: pointer;
-}
-
-#popup #window {
-
-  width: 85vmin;
+#popup .text {
+  width: 90%;
+  background-color: white;
+  border: 1px solid rgb(96, 96, 96);
+  border-radius: 5px;
 
   padding: var(--font-size-default);
 
-  opacity: 0.95;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-  cursor: default;
+}
 
-  background: rgb(255, 255, 255);
-  border: 2px solid rgb(69, 69, 69);
-  border-radius: 10px;
+#popup .text header {
+  width: 100%;
+  height: 25px;
+  border-bottom: 1px solid rgb(96, 96, 96);
+  
+  display: flex;
+
+  justify-content: space-between;
+  box-sizing: content-box;
+  padding-bottom: 3px;
+}
+
+#popup .text header div {
+  font-size: var(--font-size-small-bold);
+  text-align: start;
+
+}
+
+#popup .text header button {
+  width: 25px;
+  height: 25px;
+
+  /* color: rgb(128, 128, 128); */
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 
   position: relative;
-  
-  font-size: var(--font-size-small-bold);
+
+  transform: all .3;
+
 }
 
-#popup #window #text {
-  height: 100%;
+#popup .text header button:hover {
+  transform: scale(0.85);
+}
+
+#popup .text header button div {
+
+  width: 15px;
+  height: 2px;
+  border-radius: 10px;
+  background-color: rgb(128, 128, 128);
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+#popup .text header button div:first-child {
+  transform: translate(-50%, -50%) rotate(48deg);
+
+}
+
+#popup .text header button div:last-child {
+  transform: translate(-50%, -50%) rotate(132deg);
+
+}
+
+#popup .text main ul {
+  margin-top: var(--font-size-small);
+}
+
+#popup .text main ul#range {
+  list-style: '👉 ';
+  margin-left: var(--font-size-bold);
+  font-size: var(--font-size-default);
+}
+
+#popup .text main ul#questions_number {
+  list-style: '✔ ';
+
+  margin-left: var(--font-size-small);
+  font-size: var(--font-size-small);
+
+  width: 140px;
+
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-
-  color: rgb(0, 0, 0);
-
+  justify-content: space-between;
 }
 
-#popup #window #text section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#popup #window #text #range {
-  margin-top: var(--font-size-small-bold);
-}
-
-#popup #window #text #range ul {
-  list-style: none;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 100%;
-
-}
-
-#popup #window #text #range ul li {
-  width: 80%;
-  border-bottom: solid 2px rgb(69, 69, 69);
-
-}
-
-#popup #window #text #question {
-  margin-top: var(--font-size-small-bold);
-}
-
-#popup #window #text #question ul {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-
-  width: 30vmin;
-  justify-content: space-around;
-}
-
-#popup #window #text #question ul li {
-  margin-top: 10px;
+#popup .text main ul#range li {
+  text-align: start;
 }
 
 footer {
