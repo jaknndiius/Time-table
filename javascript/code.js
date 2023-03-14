@@ -225,7 +225,7 @@ class ExamTable extends Table {
     exams_by_time.forEach((exams, index) => {
       const tr = document.createElement('tr');
       tr.appendChild(
-        this.createElementWithText('td', (index+1) + '교시'));
+        this.createElementWithText('th', (index+1) + '교시'));
       for(const exam of exams) {
         const td = this.createElementWithText('td', exam.name);
         td.onclick = () => this.onExamTdClicked(exam);
