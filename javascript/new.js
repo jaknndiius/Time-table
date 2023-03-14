@@ -1,7 +1,5 @@
 'use strict'
-
 const week_name = ["월", "화", "수", "목", "금"];
-
 const subjects_by_time = [
   [Lit1, Eng2, Math1, Creaty, Math2, Music, Explor2],
   [Explor1, Explor1, Math3, PE, Human, Lit2, Eng1],
@@ -9,7 +7,6 @@ const subjects_by_time = [
   [Lit2, Math2, Explor2, Explor2, Lit1, Foregin, Eng3],
   [Eng1, Lit3, Eng2, Creaty, Explor1, Math1, Music]
 ];
-
 class Table {
   createElementWithText(tag, textContent) {
     const element = document.createElement(tag);
@@ -48,7 +45,6 @@ class Table {
   makeHead() {}
   makeBody() {}
 }
-
 class SimpleTable extends Table {
   static id = 'today_time_table';
   static caption = '오늘의 시간표';
@@ -93,7 +89,6 @@ class SimpleTable extends Table {
       instance.makeBody(week_index, current_class));
   }
 }
-
 class MainTable extends Table {
   static id = 'time_table';
   static caption = 'Time Table';
@@ -144,7 +139,6 @@ class MainTable extends Table {
       instance.makeBody(week_index));
   }
 }
-
 class ExamTable extends Table {
 
   static id = 'exam_time_table';
@@ -245,7 +239,6 @@ class ExamTable extends Table {
     });
     return tbody;
   }
-
   static reload(exam_list) {
     const instance = ExamTable.getInstance();
     const table = document.querySelector('#' + ExamTable.id);
@@ -256,7 +249,6 @@ class ExamTable extends Table {
   }
 }
 const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
-
 const getElapsedTime = (fromHour, fromMinute, toHour, toMinute) => {
   const h = toHour - fromHour;
   const m = toMinute - fromMinute;
@@ -273,7 +265,6 @@ const class_times = [
   [14, 0, 60], // free time and 6th class (14:00~, 15:00)
   [15, 0, 60]  // free time and 7th class (15:00~, 16:00)
 ]
-
 const getClassIndex = (hour, minute) => {
   let return_index = -1;
   class_times.forEach(([start_hour, start_minutes, duration], index) => {
@@ -282,9 +273,7 @@ const getClassIndex = (hour, minute) => {
   })
   return return_index;
 }
-
 const Previouis = { current_class: -100, week_index: -100 };
-
 const updateMainScreen = (week_index, current_class) => {
   if(current_class != Previouis.current_class) {
     if(current_class > 0)
@@ -306,16 +295,13 @@ const getDate = () => {
     seconds: date.getSeconds()
   };
 }
-
 const render = () => {
   const time = getDate();
   const week_index = toWeekdayPreiod(time.day);
   const current_class = getClassIndex(time.hours, time.minutes);
-
   updateMainScreen(week_index, current_class);
   updateSchoolTimeBar(time);
 }
-
 const school_time = { hours: 16, minutes: 0, seconds: 0 }
 const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
   const fix = number => number.toFixed(1);
@@ -328,12 +314,10 @@ const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
   })();
   if (sum_time >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
 }
-
 const onLoadFinished = exam_list => {
   ExamTable.reload(exam_list);
   setInterval(render, 1);
 }
-
 let exam_list;
 fetch('https://jaknndiius.github.io/Time-table/data/exam.json')
   .then(Response => Response.text())
