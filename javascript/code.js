@@ -129,7 +129,6 @@ class MainTable extends Table {
     }
     return tbody;
   }
-
   static reload(week_index) {
     const instance = MainTable.getInstance();
     const table = document.querySelector('#' + MainTable.id);
@@ -140,7 +139,6 @@ class MainTable extends Table {
   }
 }
 class ExamTable extends Table {
-
   static id = 'exam_time_table';
   static caption = '시험 시간표';
   constructor() {
@@ -152,9 +150,7 @@ class ExamTable extends Table {
     if(!this.instance) this.instance = new ExamTable();
     return this.instance;
   }
-
   korean_day = ['첫째날', '둘째날', '셋째날', '넷째날'];
-
   makeModalWindow(exam) {
     const popup_div = document.createElement('div');
     popup_div.id = 'popup';
