@@ -7,12 +7,12 @@ const subjects_by_time = [
   [Lit2, Math2, Explor2, Explor2, Lit1, Foregin, Eng3],
   [Eng1, Lit3, Eng2, Creaty, Explor1, Math1, Music]
 ];
+const createElementWithText = (tag, textContent) => {
+  const element = document.createElement(tag);
+  element.textContent = textContent;
+  return element;
+}
 class Table {
-  createElementWithText(tag, textContent) {
-    const element = document.createElement(tag);
-    element.textContent = textContent;
-    return element;
-  }
   onSubjectTdClicked(subjectTd) {
     const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
     subjectTd.style.display = 'none';
@@ -24,13 +24,13 @@ class Table {
     subjectTd.style.display = 'block';
   }
   makeClickableSubject(subject_name) {
-    const p = this.createElementWithText('p', subject_name);
+    const p = createElementWithText('p', subject_name);
     p.classList.add('subject_name');
     p.onclick = (event) => this.onSubjectTdClicked(event.target);
     return p;
   }
   makeClickableTeacher(teacher_name) {
-    const p = this.createElementWithText('p', teacher_name);
+    const p = createElementWithText('p', teacher_name);
     p.classList.add('teacher_name');
     p.style.display = 'none';
     p.onclick = (event) => this.onTeacherTdClicked(event.target);
@@ -62,7 +62,7 @@ class SimpleTable extends Table {
     const thead = document.createElement('thead');
     const tr = document.createElement('tr');
     for(let i=0;i<7;i++) {
-      const th = this.createElementWithText('th', (i+1) + '교시');
+      const th = createElementWithText('th', (i+1) + '교시');
       if(i == current_class-1) th.classList.add('lin-highlight1');
       tr.appendChild(th);
     }
@@ -84,7 +84,7 @@ class SimpleTable extends Table {
     const instance = SimpleTable.getInstance();
     const table = document.querySelector('#' + SimpleTable.id);
     table.replaceChildren(
-      instance.createElementWithText('caption', SimpleTable.caption),
+      createElementWithText('caption', SimpleTable.caption),
       instance.makeHead(current_class),
       instance.makeBody(week_index, current_class));
   }
@@ -106,7 +106,7 @@ class MainTable extends Table {
     if(highlight) tr.classList.add('lin-highlight2');
 
     tr.appendChild(
-      this.createElementWithText('th', week_name[week_index] + '요일'));
+      createElementWithText('th', week_name[week_index] + '요일'));
     subjects.forEach(sub =>
       tr.appendChild(this.makeClickableTd(sub+'', sub.teacher)));
     return tr;
@@ -117,7 +117,7 @@ class MainTable extends Table {
     tr.appendChild(document.createElement('th'));
     for(let i=0;i<7;i++)
       tr.appendChild(
-        this.createElementWithText('th', (i+1) + '교시'));
+        createElementWithText('th', (i+1) + '교시'));
     thead.appendChild(tr);
     return thead;
   }
@@ -133,7 +133,7 @@ class MainTable extends Table {
     const instance = MainTable.getInstance();
     const table = document.querySelector('#' + MainTable.id);
     table.replaceChildren(
-      instance.createElementWithText('caption', MainTable.caption),
+      createElementWithText('caption', MainTable.caption),
       instance.makeHead(),
       instance.makeBody(week_index));
   }
@@ -159,7 +159,7 @@ class ExamTable extends Table {
     text_div.classList.add('text');
 
     const header = document.createElement('header');
-    header.appendChild(this.createElementWithText('div', exam.name));
+    header.appendChild(createElementWithText('div', exam.name));
     const button = document.createElement('button');
     button.appendChild(document.createElement('div'));
     button.appendChild(document.createElement('div'));
@@ -172,16 +172,16 @@ class ExamTable extends Table {
     range_ul.id = 'range';
     for(const range of exam.range)
       range_ul.appendChild(
-        this.createElementWithText('li', range));
+        createElementWithText('li', range));
     main.appendChild(range_ul);
     const questions_number_ul = document.createElement('ul');
     questions_number_ul.id = 'questions_number';
     exam.selective > 0 &&
       questions_number_ul.appendChild(
-        this.createElementWithText('li', `객관식 ${exam.selective}개`));
+        createElementWithText('li', `객관식 ${exam.selective}개`));
     exam.descriptive > 0 &&
       questions_number_ul.appendChild(
-        this.createElementWithText('li', `서술형 ${exam.descriptive}개`));
+        createElementWithText('li', `서술형 ${exam.descriptive}개`));
     main.appendChild(questions_number_ul);
     text_div.appendChild(main);
 
@@ -202,9 +202,9 @@ class ExamTable extends Table {
 
     exam_list.forEach(({day}, index) => {
       korean_day_tr.appendChild(
-        this.createElementWithText('th', this.korean_day[index]));
+        createElementWithText('th', this.korean_day[index]));
       number_day_tr.appendChild(
-        this.createElementWithText('th', `${day[0]}/${day[1]} ${week_name[day[2]]}`));
+        createElementWithText('th', `${day[0]}/${day[1]} ${week_name[day[2]]}`));
     });
 
     thead.appendChild(korean_day_tr);
@@ -225,9 +225,9 @@ class ExamTable extends Table {
     exams_by_time.forEach((exams, index) => {
       const tr = document.createElement('tr');
       tr.appendChild(
-        this.createElementWithText('th', (index+1) + '교시'));
+        createElementWithText('th', (index+1) + '교시'));
       for(const exam of exams) {
-        const td = this.createElementWithText('td', exam.name);
+        const td = createElementWithText('td', exam.name);
         td.onclick = () => this.onExamTdClicked(exam);
         tr.appendChild(td);
       }
@@ -239,9 +239,43 @@ class ExamTable extends Table {
     const instance = ExamTable.getInstance();
     const table = document.querySelector('#' + ExamTable.id);
     table.replaceChildren(
-      instance.createElementWithText('caption', ExamTable.caption),
+      createElementWithText('caption', ExamTable.caption),
       instance.makeHead(exam_list),
       instance.makeBody(exam_list));
+  }
+}
+class MoakTestNoti {
+  constructor() {
+    if(MoakTestNoti.instance) throw new Error('alreay instantiated class.');
+    MoakTestNoti.instance = this;
+  }
+  static getInstance() {
+    if(!this.instance) this.instance = new MoakTestNoti();
+    return this.instance;
+  }
+  options = { month: 'long', day: 'numeric'}
+  getDDay(targetDate) {
+    const today = new Date();
+    const timeDiff = targetDate.getTime() - today.getTime();
+    return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+  }
+  getFastestDDay() {
+    for(const mockTest of mock_tests) {
+      const dDay = this.getDDay(mockTest);
+      if(dDay >= 0) return {
+        date: mockTest.toLocaleDateString('ko-KR', this.options),
+        dDay: dDay
+      };
+    }
+    return null;
+  }
+  
+  static reload() {
+    const moak_test_noti_div = document.getElementById('moak_test_noti');
+    const dDay = MoakTestNoti.getInstance().getFastestDDay();
+    const title_div = createElementWithText('div', `모의고사 ${dDay.date}`);
+    const dDayDiv = createElementWithText('div', `D-day ${dDay.dDay}일`);
+    moak_test_noti_div.replaceChildren(title_div, dDayDiv);
   }
 }
 const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
@@ -308,10 +342,12 @@ const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
     const untill_second = school_time.seconds - seconds;
     return untill_hour*3600 + untill_minute*60 + untill_second;
   })();
-  if (sum_time >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
+  // if (sum_time >= 0) 
+  footer.innerHTML = `하교까지 약 <span>${fix(sum_time/3600)}</span>시간 = <span>${fix(sum_time/60)}</span>분 = <span>${sum_time}</span>초 남았다!`
 }
 const onLoadFinished = exam_list => {
   ExamTable.reload(exam_list);
+  MoakTestNoti.reload();
   setInterval(render, 1);
 }
 let exam_list;
