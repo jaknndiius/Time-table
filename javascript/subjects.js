@@ -50,7 +50,7 @@ const Foregin = new Subject('일본어', '김희인');
 const Creaty = new Subject('창체', '장인석');
 
 //모의고사
-const mock_tests = [
+const mockTests = [
   new Date('2023-3-23'),
   new Date('2023-6-1'),
   new Date('2023-9-6'),
