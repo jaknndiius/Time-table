@@ -1,5 +1,6 @@
 'use strict'
 const weekName = ["월", "화", "수", "목", "금"];
+const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
 const subjectsByTime = [
   [Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, ExplorB],
   [ExplorA, ExplorA, Mathmatics(3), PE, Human, Lit(2), Eng(1)],
@@ -148,7 +149,8 @@ class ExamTable extends Table {
     return this.instance;
   }
   koreanDay = ['첫째날', '둘째날', '셋째날', '넷째날'];
-  makeModalWindow(exam) {
+  makeModalWindow(subject) {
+    const attribute = subject.examAttribute;
     const popupDiv = document.createElement('div');
     popupDiv.id = 'popup';
 
@@ -156,7 +158,7 @@ class ExamTable extends Table {
     textDiv.classList.add('text');
 
     const header = document.createElement('header');
-    header.appendChild(createElementWithText('div', exam.name));
+    header.appendChild(createElementWithText('div', subject));
     const button = document.createElement('button');
     button.appendChild(document.createElement('div'));
     button.appendChild(document.createElement('div'));
@@ -167,78 +169,87 @@ class ExamTable extends Table {
     const main = document.createElement('main');
     const rangeUl = document.createElement('ul');
     rangeUl.id = 'range';
-    for(const range of exam.range)
+
+    for(const range of attribute.ranges)
       rangeUl.appendChild(
         createElementWithText('li', range));
     main.appendChild(rangeUl);
     const questionsNumberUl = document.createElement('ul');
     questionsNumberUl.id = 'questions_number';
-    exam.selective > 0 &&
+    attribute.selective > 0 &&
       questionsNumberUl.appendChild(
-        createElementWithText('li', `객관식 ${exam.selective}개`));
-    exam.descriptive > 0 &&
+        createElementWithText('li', `객관식 ${attribute.selective}개`));
+    attribute.descriptive > 0 &&
       questionsNumberUl.appendChild(
-        createElementWithText('li', `서술형 ${exam.descriptive}개`));
+        createElementWithText('li', `서술형 ${attribute.descriptive}개`));
     main.appendChild(questionsNumberUl);
     textDiv.appendChild(main);
 
     popupDiv.appendChild(textDiv);
     return popupDiv;
   }
-  onExamTdClicked(exam) {
+  onExamTdClicked(subject) {
     document.querySelector('#main').appendChild(
-      this.makeModalWindow(exam));
+      this.makeModalWindow(subject));
   }
-  makeHead(examList) {
+  formatDate(day) {
+    return `${day.getMonth()+1}/${day.getDate()} ${weekName[day.getDay()-1]}`;
+  }
+  makeHead() {
     const thead = document.createElement('thead');
 
     const koreanDayTr = document.createElement('tr');
     koreanDayTr.appendChild(document.createElement('th'));
     const numberDayTr = document.createElement('tr');
     numberDayTr.appendChild(document.createElement('th'));
-
-    examList.forEach(({day}, index) => {
+  
+    ExamList.forEach(({day}, index) => {
       koreanDayTr.appendChild(
         createElementWithText('th', this.koreanDay[index]));
       numberDayTr.appendChild(
-        createElementWithText('th', `${day[0]}/${day[1]} ${weekName[day[2]]}`));
+        createElementWithText('th', `${this.formatDate(day)}`));
     });
 
     thead.appendChild(koreanDayTr);
     thead.appendChild(numberDayTr);
     return thead;
   }
-  makeBody(examList) {
+  makeBody() {
     const tbody = document.createElement('tbody');
-    const examsByTime = [];
-    for(const {subject: subjects} of examList) {
-      subjects.forEach((subject, index) => {
-        if(examsByTime[index] == undefined)
-          examsByTime[index] = new Array();
-        
-        examsByTime[index].push(subject);
-      });
-    }
+    const maxSize = Math.max(...ExamList.map(exams => exams.subjects.length));
+
+    const examsByTime = new Array(maxSize);
+    
+    for(const exams of ExamList) {
+      for(let i=0;i<maxSize;i++) {
+        if(examsByTime[i] == undefined) examsByTime[i] = new Array();
+        examsByTime[i].push(exams.subjects[i]);
+      }
+    }    
     examsByTime.forEach((exams, index) => {
       const tr = document.createElement('tr');
       tr.appendChild(
         createElementWithText('th', (index+1) + '교시'));
-      for(const exam of exams) {
-        const td = createElementWithText('td', exam.name);
-        td.onclick = () => this.onExamTdClicked(exam);
+      for(const subject of exams) {
+        let td;
+        if(subject == undefined) td = createElementWithText('td', '-');
+        else {
+          td = createElementWithText('td', subject);
+          td.onclick = () => this.onExamTdClicked(subject);
+        }
         tr.appendChild(td);
       }
       tbody.appendChild(tr);
     });
     return tbody;
   }
-  static reload(examList) {
+  static reload() {
     const instance = ExamTable.getInstance();
     const table = document.querySelector('#' + instance.id);
     table.replaceChildren(
       createElementWithText('caption', instance.caption),
-      instance.makeHead(examList),
-      instance.makeBody(examList));
+      instance.makeHead(),
+      instance.makeBody());
   }
 }
 class MoakTestNoti {
@@ -275,7 +286,6 @@ class MoakTestNoti {
     mockTestNotiDiv.replaceChildren(titleDiv, dDayDiv);
   }
 }
-const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
 const getElapsedTime = (fromHour, fromMinute, toHour, toMinute) => ((toHour-fromHour)*60) + toMinute-fromMinute;
 //[start hours, start minutes, duration]
 const classTimes = [
@@ -336,13 +346,8 @@ const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
   })();
   if (sumTime >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sumTime/3600)}</span>시간 = <span>${fix(sumTime/60)}</span>분 = <span>${sumTime}</span>초 남았다!`
 }
-const onLoadFinished = examList => {
-  ExamTable.reload(examList);
-  MoakTestNoti.reload();
-  setInterval(render, 1);
-}
-let examList;
-fetch('https://jaknndiius.github.io/Time-table/data/exam.json')
-  .then(Response => Response.text())
-  .then(text => JSON.parse(text))
-  .then(onLoadFinished);
+
+// load page
+ExamTable.reload();
+MoakTestNoti.reload();
+setInterval(render, 1);

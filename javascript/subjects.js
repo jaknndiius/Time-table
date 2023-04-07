@@ -11,50 +11,46 @@ class ExamAttribute {
   }
 }
 class Subject {
-  constructor(name, teacher) {
-    this.name = name;
+  constructor(subjectName, teacher) {
+    this.subjectName = subjectName;
     this.teacher = teacher;
   }
   toString() {
-    return this.name;
+    return this.subjectName;
   }
   setExam(examAttribute) {
     this.examAttribute = examAttribute;
   }
 }
 class MultipleSubject extends Subject {
-  constructor(name, teacher, suffix) {
-    super(name, teacher);
+  constructor(subjectName, teacher, suffix) {
+    super(subjectName, teacher);
     this.suffix = suffix;
   }
-  toString() { return this.name[0] + this.suffix; }
+  toString() { return this.subjectName[0] + this.suffix; }
 }
 class ExplorSubject extends MultipleSubject {
-  toString() { return this.name + this.suffix; }
+  toString() { return this.subjectName + this.suffix; }
 }
 
-function createSubjectList(name, teachers) {
+function createSubjectList(subjectName, teachers) {
   const subjects = teachers.map(
-    (teacher, index) => new MultipleSubject(name, teacher, index+1));
-  return number => subjects[number-1];
+    (teacher, index) => new MultipleSubject(subjectName, teacher, index+1));
+  const func = number => subjects[number-1];
+  func.toString = () => subjectName;
+  func.setExam = function(examAttribute) {
+    this.examAttribute = examAttribute;
+  };
+  return func;
 }
 // 문학
 const Lit = createSubjectList('문학', ['윤동희', '신치훈', '김병호']);
-// const Lit1 = new MultipleSubject('문학', '윤동희', '1');
-// const Lit2 = new MultipleSubject('문학', '신치훈', '2');
-// const Lit3 = new MultipleSubject('문학', '김병호', '3');
 // 인상
 const Human = new Subject('인상', '윤동희');
 // 영어
 const Eng = createSubjectList('영어', ['장인석', '이석훈', '장인석']);
-// const Eng1 = new MultipleSubject('영어', '장인석', '1');
-// const Eng2 = new MultipleSubject('영어', '이성훈', '2');
-// const Eng3 = new MultipleSubject('영어', '장인석', '3');
 // 수학
 const Mathmatics = createSubjectList('수학', ['노현태', '박진우', '박진우']);
-// const Math1 = new MultipleSubject('수학', '노현태', '1');
-// const Math2 = new MultipleSubject('수학', '박진우', '2');
-// const Math3 = new MultipleSubject('수학', '박진우', '3');
 //탐구
 const ExplorA = new ExplorSubject('물리', '황준식', 'A');
 const ExplorB = new ExplorSubject('지학', '이은진', 'B');
@@ -68,7 +64,6 @@ const History = new Subject('국사', '김진영');
 const Art = new Subject('미술', '권유정');
 // 외국어
 const Foregin = new Subject('일본어', '김희인');
-// Chinese = new Subject('중국어', '배슬기');
 // 창체
 const Creaty = new Subject('창체', '장인석');
 
