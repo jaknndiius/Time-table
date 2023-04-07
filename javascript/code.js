@@ -1,11 +1,11 @@
 'use strict'
 const weekName = ["월", "화", "수", "목", "금"];
 const subjectsByTime = [
-  [Lit1, Eng2, Math1, Creaty, Math2, Music, Explor2],
-  [Explor1, Explor1, Math3, PE, Human, Lit2, Eng1],
-  [History, Math1, Art, Math2, Creaty, Creaty, Creaty],
-  [Lit2, Math2, Explor2, Explor2, Lit1, Foregin, Eng3],
-  [Eng1, Lit3, Eng2, Creaty, Explor1, Math1, Music]
+  [Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, ExplorB],
+  [ExplorA, ExplorA, Mathmatics(3), PE, Human, Lit(2), Eng(1)],
+  [History, Mathmatics(1), Art, Mathmatics(2), Creaty, Creaty, Creaty],
+  [Lit(2), Mathmatics(2), ExplorB, ExplorB, Lit(1), Foregin, Eng(3)],
+  [Eng(1), Lit(3), Eng(2), Creaty, ExplorA, Mathmatics(1), Music]
 ];
 const createElementWithText = (tag, textContent) => {
   const element = document.createElement(tag);
@@ -13,6 +13,10 @@ const createElementWithText = (tag, textContent) => {
   return element;
 }
 class Table {
+  constructor(id, caption) {
+    this.id = id;
+    this.caption = caption;
+  }
   onSubjectTdClicked(subjectTd) {
     const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
     subjectTd.style.display = 'none';
@@ -46,15 +50,13 @@ class Table {
   makeBody() {}
 }
 class SimpleTable extends Table {
-  static id = 'today_time_table';
-  static caption = '오늘의 시간표';
-  constructor() {
+  constructor(id, caption) {
     if(SimpleTable.instance) throw new Error('alreay instantiated class.');
-    super();
+    super(id, caption);
     SimpleTable.instance = this;
   }
   static getInstance() {
-    if(!this.instance) this.instance = new SimpleTable();
+    if(!this.instance) this.instance = new SimpleTable('today_time_table', '오늘의 시간표');
     return this.instance;
   }
   makeHead(currentClass) {
@@ -81,23 +83,21 @@ class SimpleTable extends Table {
   }
   static reload(weekIndex, currentClass) {
     const instance = SimpleTable.getInstance();
-    const table = document.querySelector('#' + SimpleTable.id);
+    const table = document.querySelector('#' + instance.id);
     table.replaceChildren(
-      createElementWithText('caption', SimpleTable.caption),
+      createElementWithText('caption', instance.caption),
       instance.makeHead(currentClass),
       instance.makeBody(weekIndex, currentClass));
   }
 }
 class MainTable extends Table {
-  static id = 'time_table';
-  static caption = 'Time Table';
-  constructor() {
+  constructor(id, caption) {
     if(MainTable.instance) throw new Error('alreay instantiated class.');
-    super();
+    super(id, caption);
     MainTable.instance = this;
   }
   static getInstance() {
-    if(!this.instance) this.instance = new MainTable();
+    if(!this.instance) this.instance = new MainTable('time_table', 'Time Table');
     return this.instance;
   }
   makeRow(weekIndex, subjects, highlight) {
@@ -130,23 +130,21 @@ class MainTable extends Table {
   }
   static reload(weekIndex) {
     const instance = MainTable.getInstance();
-    const table = document.querySelector('#' + MainTable.id);
+    const table = document.querySelector('#' + instance.id);
     table.replaceChildren(
-      createElementWithText('caption', MainTable.caption),
+      createElementWithText('caption', instance.caption),
       instance.makeHead(),
       instance.makeBody(weekIndex));
   }
 }
 class ExamTable extends Table {
-  static id = 'exam_time_table';
-  static caption = '시험 시간표';
-  constructor() {
+  constructor(id, caption) {
     if(ExamTable.instance) throw new Error('alreay instantiated class.');
-    super();
+    super(id, caption);
     ExamTable.instance = this;
   }
   static getInstance() {
-    if(!this.instance) this.instance = new ExamTable();
+    if(!this.instance) this.instance = new ExamTable('exam_time_table', '시험 시간표');
     return this.instance;
   }
   koreanDay = ['첫째날', '둘째날', '셋째날', '넷째날'];
@@ -236,9 +234,9 @@ class ExamTable extends Table {
   }
   static reload(examList) {
     const instance = ExamTable.getInstance();
-    const table = document.querySelector('#' + ExamTable.id);
+    const table = document.querySelector('#' + instance.id);
     table.replaceChildren(
-      createElementWithText('caption', ExamTable.caption),
+      createElementWithText('caption', instance.caption),
       instance.makeHead(examList),
       instance.makeBody(examList));
   }
