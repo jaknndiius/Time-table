@@ -32,7 +32,19 @@ class MultipleSubject extends Subject {
 class ExplorSubject extends MultipleSubject {
   toString() { return this.subjectName + this.suffix; }
 }
-
+class SubjectList {
+  constructor(subjectName, teachers) {
+    const subjects = teachers.map(
+      (teacher, index) => new MultipleSubject(subjectName, teacher, index+1));
+      
+    const listFunction = order => subjects[order-1];
+    listFunction.toString = () => subjectName;
+    listFunction.setExam = function(examAttribute) {
+      this.examAttribute = examAttribute;
+    };
+    return listFunction;
+  }
+}
 function createSubjectList(subjectName, teachers) {
   const subjects = teachers.map(
     (teacher, index) => new MultipleSubject(subjectName, teacher, index+1));
@@ -43,34 +55,67 @@ function createSubjectList(subjectName, teachers) {
   };
   return func;
 }
-// 문학
-const Lit = createSubjectList('문학', ['윤동희', '신치훈', '김병호']);
-// 인상
-const Human = new Subject('인상', '윤동희');
-// 영어
-const Eng = createSubjectList('영어', ['장인석', '이석훈', '장인석']);
-// 수학
-const Mathmatics = createSubjectList('수학', ['노현태', '박진우', '박진우']);
-//탐구
-const ExplorA = new ExplorSubject('물리', '황준식', 'A');
-const ExplorB = new ExplorSubject('지학', '이은진', 'B');
-// 음악
-const Music = new Subject('음악', '지세현');
-// 체육
-const PE = new Subject('체육', '박영덕');
-// 국사
-const History = new Subject('국사', '김진영');
-// 미술
-const Art = new Subject('미술', '권유정');
-// 외국어
-const Foregin = new Subject('일본어', '김희인');
-// 창체
-const Creaty = new Subject('창체', '장인석');
-
-//모의고사
-const mockTests = [
-  new Date('2023-3-23'),
-  new Date('2023-6-1'),
-  new Date('2023-9-6'),
-  new Date('2023-11-21')
-];
+class Exams {
+  constructor(month, date) {
+    this.day = new Date(`${new Date().getFullYear()}-${month}-${date}`);
+  }
+  setSubjects(...subjects) {
+    this.subjects = subjects;
+    return this;
+  }
+}
+class SubjectGroup {
+  constructor(...subjects) {
+    this.subjects = subjects;
+  }
+  setToRegularSchedule(day) {
+    Setting.addSubjectsToSchedule(day, this.subjects);
+  }
+  setToExamSchedule(month, date) {
+    Setting.addExams(month, date, this.subjects);
+  }
+}
+class Setting {
+  constructor() {
+    if(Setting.instance) throw new Error('alreay instantiated class.');
+    this.mockTests = [];
+    this.subjectsByTime = [];
+    this.examList = [];
+    Setting.instance = this;
+  }
+  static getInstance() {
+    if(!this.instance) this.instance = new Setting();
+    return this.instance;
+  }
+  static getMockTests() {
+    return Setting.getInstance().mockTests;
+  }
+  static getSubjectsByTime() {
+    return Setting.getInstance().subjectsByTime;
+  }
+  static getExamList() {
+    return Setting.getInstance().examList;
+  }
+  static addMockTest(dateFormat) {
+    Setting.getInstance().mockTests.push(new Date(dateFormat));
+  }
+  static group(...subjects) {
+    return new SubjectGroup(...subjects);
+  }
+  static addSubjectsToSchedule(day, subjects) {
+    Setting.getInstance().subjectsByTime[day] = subjects;
+  }
+  static addExams(month, date, subjects) {
+    Setting.getInstance().examList.push(
+      new Exams(month, date)
+        .setSubjects(...subjects)
+    );
+  }
+}
+const Day = {
+  MONDAY: 0,
+  THEUSDAY: 1,
+  WEDNESDAY: 2,
+  THURSDAY: 3,
+  FIRDAY: 4
+}

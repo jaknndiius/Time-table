@@ -1,13 +1,6 @@
 'use strict'
 const weekName = ["월", "화", "수", "목", "금"];
 const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
-const subjectsByTime = [
-  [Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, ExplorB],
-  [ExplorA, ExplorA, Mathmatics(3), PE, Human, Lit(2), Eng(1)],
-  [History, Mathmatics(1), Art, Mathmatics(2), Creaty, Creaty, Creaty],
-  [Lit(2), Mathmatics(2), ExplorB, ExplorB, Lit(1), Foregin, Eng(3)],
-  [Eng(1), Lit(3), Eng(2), Creaty, ExplorA, Mathmatics(1), Music]
-];
 const createElementWithText = (tag, textContent) => {
   const element = document.createElement(tag);
   element.textContent = textContent;
@@ -74,7 +67,7 @@ class SimpleTable extends Table {
   makeBody(weekIndex, currentClass) {
     const tbody = document.createElement('tbody');
     const tr = document.createElement('tr');
-    subjectsByTime[weekIndex].forEach((sub, idx) => {
+    Setting.getSubjectsByTime()[weekIndex].forEach((sub, idx) => {
       const td = this.makeClickableTd(sub+'', sub.teacher);
       if(idx == currentClass-1) td.classList.add('lin-highlight1');
       tr.appendChild(td);
@@ -125,7 +118,7 @@ class MainTable extends Table {
     const tbody = document.createElement('tbody');
     for(let i=0;i<5;i++) {
       tbody.appendChild(
-        this.makeRow(i, subjectsByTime[i], weekIndex == i));
+        this.makeRow(i, Setting.getSubjectsByTime()[i], weekIndex == i));
     }
     return tbody;
   }
@@ -193,7 +186,7 @@ class ExamTable extends Table {
       this.makeModalWindow(subject));
   }
   formatDate(day) {
-    return `${day.getMonth()+1}/${day.getDate()} ${weekName[day.getDay()-1]}`;
+    return `${day.getMonth()+1}/${day.getDate()} ${weekName[day.getDay()-1] || ''}`;
   }
   makeHead() {
     const thead = document.createElement('thead');
@@ -203,7 +196,7 @@ class ExamTable extends Table {
     const numberDayTr = document.createElement('tr');
     numberDayTr.appendChild(document.createElement('th'));
   
-    ExamList.forEach(({day}, index) => {
+    Setting.getExamList().forEach(({day}, index) => {
       koreanDayTr.appendChild(
         createElementWithText('th', this.koreanDay[index]));
       numberDayTr.appendChild(
@@ -216,20 +209,15 @@ class ExamTable extends Table {
   }
   makeBody() {
     const tbody = document.createElement('tbody');
-    const maxSize = Math.max(...ExamList.map(exams => exams.subjects.length));
+    const maxSize = Math.max(...Setting.getExamList().map(exams => exams.subjects.length));
 
-    const examsByTime = new Array(maxSize);
+    const examsByTime = new Array(maxSize).fill().map(_ => []);
     
-    for(const exams of ExamList) {
-      for(let i=0;i<maxSize;i++) {
-        if(examsByTime[i] == undefined) examsByTime[i] = new Array();
-        examsByTime[i].push(exams.subjects[i]);
-      }
-    }    
+    Setting.getExamList().forEach(exams => examsByTime.forEach((arr, idx) => arr.push(exams.subjects[idx])));
+
     examsByTime.forEach((exams, index) => {
       const tr = document.createElement('tr');
-      tr.appendChild(
-        createElementWithText('th', (index+1) + '교시'));
+      tr.appendChild(createElementWithText('th', (index+1) + '교시'));
       for(const subject of exams) {
         let td;
         if(subject == undefined) td = createElementWithText('td', '-');
@@ -265,10 +253,10 @@ class MoakTestNoti {
   getDDay(targetDate) {
     const today = new Date();
     const timeDiff = targetDate.getTime() - today.getTime();
-    return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return Math.ceil(timeDiff / (1000*60*60*24));
   }
   getFastestDDay() {
-    for(const mockTest of mockTests) {
+    for(const mockTest of Setting.getMockTests()) {
       const dDay = this.getDDay(mockTest);
       if(dDay >= 0) return {
         date: mockTest.toLocaleDateString('ko-KR', this.options),
@@ -277,7 +265,6 @@ class MoakTestNoti {
     }
     return null;
   }
-  
   static reload() {
     const mockTestNotiDiv = document.querySelector('#moak_test_noti');
     const dDay = MoakTestNoti.getInstance().getFastestDDay();
