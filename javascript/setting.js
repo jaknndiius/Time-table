@@ -24,7 +24,7 @@ const C = new ExplorSubject(subjectName: string, teacher: string, suffix: string
 
 모의고사 날짜 설정
 Setting.addMockTest(dateFormat: string)
-> Date 객체 포멧 방법과 같음
+> YYYY/MM/DD 포멧으로 설정. '-'을 쓰면 IOS 환경에서 오류남
 
 과목 그룹화
 Setting.group(...subjects: ...Subject): SubjectGroup
@@ -98,10 +98,10 @@ const Foregin = new Subject('일본어', '김희인');
 // 창체
 const Creaty = new Subject('창체', '장인석');
 //모의고사
-Setting.addMockTest('2023-3-23');
-Setting.addMockTest('2023-6-1');
-Setting.addMockTest('2023-9-6');
-Setting.addMockTest('2023-11-21');
+Setting.addMockTest('2023/03/23');
+Setting.addMockTest('2023/06/01');
+Setting.addMockTest('2023/09/06');
+Setting.addMockTest('2023/11/21');
 //시간표
 Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, ExplorB)
   .setToRegularSchedule(Day.MONDAY);

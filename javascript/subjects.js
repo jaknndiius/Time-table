@@ -57,7 +57,7 @@ function createSubjectList(subjectName, teachers) {
 }
 class Exams {
   constructor(month, date) {
-    this.day = new Date(`${new Date().getFullYear()}-${month}-${date}`);
+    this.day = new Date(`${new Date().getFullYear()}/${month}/${date}`);
   }
   setSubjects(...subjects) {
     this.subjects = subjects;
