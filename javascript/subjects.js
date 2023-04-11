@@ -29,9 +29,6 @@ class MultipleSubject extends Subject {
   }
   toString() { return this.subjectName[0] + this.suffix; }
 }
-class ExplorSubject extends MultipleSubject {
-  toString() { return this.subjectName + this.suffix; }
-}
 class SubjectList {
   constructor(subjectName, teachers) {
     const subjects = teachers.map(
