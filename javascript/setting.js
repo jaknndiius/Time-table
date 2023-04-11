@@ -6,15 +6,13 @@ const A = new Subject(subjectName: string, teacher: string)
 
 수1, 수2같은 여러개인 과목 생성 방법
 const B = new SubjectList(subjectName: string, teachers: string[]) : (order: number) => MultipleSubject
-> B(1), B(2) 같은 방법으로 접근 가능하며, order는 teachers의 선생님 순으로 1부터 시작
+> B(1), B(2) 같은 방법으로 접근 가능하며 이때 B(order: number)는 MultipleSubject 클래스임. 
+> order는 teachers의 선생님 순으로 1부터 시작
 > 표시될 때 과목 앞 글자와 숫자를 붙여 표시됨
 
-탐구 과목 생성 방법
-const C = new ExplorSubject(subjectName: string, teacher: string, suffix: string)
-> 표시될 때 suffix를 붙여 표시됨
-
 시험 설정
-(위에서 생성한 과목).setExam(examAttribute: *ExamArrtibute)
+(*과목).setExam(examAttribute: *ExamArrtibute)
+*과목은 Subject, SubjectList, MultipleSubject, 모두 가능
 *ExamAttribute 생성 방법:
   new ExamAttribute(selective: number, descriptive: number)
   > 객관식, 서술형 갯수 설정
@@ -68,14 +66,14 @@ Mathmatics(2).setExam(
     .addRange('학습지: 100문제(33번, 34번, 90번 제외)')
 );
 //탐구
-const ExplorA = new ExplorSubject('물리', '황준식', 'A');
-ExplorA.setExam(
+const Physics = new Subject('물리', '황준식');
+Physics.setExam(
   new ExamAttribute(20, 4)
     .addRange('교과서: p10~93')
     .addRange('완자: p10~145')
 );
-const ExplorB = new ExplorSubject('지학', '이은진', 'B');
-ExplorB.setExam(
+const EarthScience = new Subject('지학', '이은진');
+EarthScience.setExam(
   new ExamAttribute(20, 4)
     .addRange('교과서: p10~77')
     .addRange('완자: p10~98')
@@ -103,22 +101,22 @@ Setting.addMockTest('2023/06/01');
 Setting.addMockTest('2023/09/06');
 Setting.addMockTest('2023/11/21');
 //시간표
-Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, ExplorB)
+Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, EarthScience)
   .setToRegularSchedule(Day.MONDAY);
-Setting.group(ExplorA, ExplorA, Mathmatics(3), PE, Human, Lit(2), Eng(1))
+Setting.group(Physics, Physics, Mathmatics(3), PE, Human, Lit(2), Eng(1))
   .setToRegularSchedule(Day.THEUSDAY);
 Setting.group(KHistory, Mathmatics(1), Art, Mathmatics(2), Creaty, Creaty, Creaty)
   .setToRegularSchedule(Day.WEDNESDAY);
-Setting.group(Lit(2), Mathmatics(2), ExplorB, ExplorB, Lit(1), Foregin, Eng(3))
+Setting.group(Lit(2), Mathmatics(2), EarthScience, EarthScience, Lit(1), Foregin, Eng(3))
   .setToRegularSchedule(Day.THURSDAY);
-Setting.group(Eng(1), Lit(3), Eng(2), Creaty, ExplorA, Mathmatics(1), Music)
+Setting.group(Eng(1), Lit(3), Eng(2), Creaty, Physics, Mathmatics(1), Music)
   .setToRegularSchedule(Day.FIRDAY);
 
 Setting.group(Lit, Eng)
   .setToExamSchedule(4, 6);
 Setting.group(Mathmatics(1), Mathmatics(2))
   .setToExamSchedule(4, 7);
-Setting.group(ExplorA, ExplorB)
+Setting.group(Physics, EarthScience)
   .setToExamSchedule(4, 8);
 Setting.group(KHistory)
   .setToExamSchedule(4, 9);
