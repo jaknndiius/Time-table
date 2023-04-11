@@ -7,29 +7,29 @@ const createElementWithText = (tag, textContent) => {
   return element;
 }
 const EventHandler = {
-  onSubjectTdClicked: (subjectTd) => {
+  onSubjectTdClicked: subjectTd => {
     const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
     subjectTd.style.display = 'none';
     teacherTd.style.display = 'block';
   },
-  onTeacherTdClicked: (teacherTd) => {
+  onTeacherTdClicked: teacherTd => {
     const subjectTd = teacherTd.parentElement.querySelector('.subject_name');
     teacherTd.style.display = 'none';
     subjectTd.style.display = 'block';
   }
 }
 const ElementCreator = {
-  makeClickableSubject: (subjectName) => {
+  makeClickableSubject: subjectName => {
     const p = createElementWithText('p', subjectName);
     p.classList.add('subject_name');
-    p.onclick = (event) => EventHandler.onSubjectTdClicked(event.target);
+    p.onclick = event => EventHandler.onSubjectTdClicked(event.target);
     return p;
   },
-  makeClickableTeacher: (teacherName) => {
+  makeClickableTeacher: teacherName => {
     const p = createElementWithText('p', teacherName);
     p.classList.add('teacher_name');
     p.style.display = 'none';
-    p.onclick = (event) => EventHandler.onTeacherTdClicked(event.target);
+    p.onclick = event => EventHandler.onTeacherTdClicked(event.target);
     return p;
   },
   makeClickableTd: (subjectName, teacherName) => {
