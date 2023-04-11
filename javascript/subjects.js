@@ -45,16 +45,6 @@ class SubjectList {
     return listFunction;
   }
 }
-function createSubjectList(subjectName, teachers) {
-  const subjects = teachers.map(
-    (teacher, index) => new MultipleSubject(subjectName, teacher, index+1));
-  const func = number => subjects[number-1];
-  func.toString = () => subjectName;
-  func.setExam = function(examAttribute) {
-    this.examAttribute = examAttribute;
-  };
-  return func;
-}
 class Exams {
   constructor(month, date) {
     this.day = new Date(`${new Date().getFullYear()}/${month}/${date}`);
@@ -112,10 +102,4 @@ class Setting {
     );
   }
 }
-const Day = {
-  MONDAY: 0,
-  THEUSDAY: 1,
-  WEDNESDAY: 2,
-  THURSDAY: 3,
-  FIRDAY: 4
-}
+const Day = { MONDAY: 0, THEUSDAY: 1, WEDNESDAY: 2, THURSDAY: 3, FIRDAY: 4 };
