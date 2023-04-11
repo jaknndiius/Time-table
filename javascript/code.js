@@ -6,40 +6,45 @@ const createElementWithText = (tag, textContent) => {
   element.textContent = textContent;
   return element;
 }
+const EventHandler = {
+  onSubjectTdClicked: (subjectTd) => {
+    const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
+    subjectTd.style.display = 'none';
+    teacherTd.style.display = 'block';
+  },
+  onTeacherTdClicked: (teacherTd) => {
+    const subjectTd = teacherTd.parentElement.querySelector('.subject_name');
+    teacherTd.style.display = 'none';
+    subjectTd.style.display = 'block';
+  }
+}
+const ElementCreator = {
+  makeClickableSubject: (subjectName) => {
+    const p = createElementWithText('p', subjectName);
+    p.classList.add('subject_name');
+    p.onclick = (event) => EventHandler.onSubjectTdClicked(event.target);
+    return p;
+  },
+  makeClickableTeacher: (teacherName) => {
+    const p = createElementWithText('p', teacherName);
+    p.classList.add('teacher_name');
+    p.style.display = 'none';
+    p.onclick = (event) => EventHandler.onTeacherTdClicked(event.target);
+    return p;
+  },
+  makeClickableTd: (subjectName, teacherName) => {
+    const td = document.createElement('td');
+    td.appendChild(ElementCreator.makeClickableSubject(subjectName));
+    td.appendChild(ElementCreator.makeClickableTeacher(teacherName));
+    return td;
+  }
+}
 class Table {
   constructor(id, caption) {
     this.id = id;
     this.caption = caption;
   }
-  onSubjectTdClicked(subjectTd) {
-    const teacherTd = subjectTd.parentElement.querySelector('.teacher_name');
-    subjectTd.style.display = 'none';
-    teacherTd.style.display = 'block';
-  }
-  onTeacherTdClicked(teacherTd) {
-    const subjectTd = teacherTd.parentElement.querySelector('.subject_name');
-    teacherTd.style.display = 'none';
-    subjectTd.style.display = 'block';
-  }
-  makeClickableSubject(subjectName) {
-    const p = createElementWithText('p', subjectName);
-    p.classList.add('subject_name');
-    p.onclick = (event) => this.onSubjectTdClicked(event.target);
-    return p;
-  }
-  makeClickableTeacher(teacherName) {
-    const p = createElementWithText('p', teacherName);
-    p.classList.add('teacher_name');
-    p.style.display = 'none';
-    p.onclick = (event) => this.onTeacherTdClicked(event.target);
-    return p;
-  }
-  makeClickableTd(subjectName, teacherName) {
-    const td = document.createElement('td');
-    td.appendChild(this.makeClickableSubject(subjectName));
-    td.appendChild(this.makeClickableTeacher(teacherName));
-    return td;
-  }
+
   makeHead() {}
   makeBody() {}
 }
@@ -68,7 +73,7 @@ class SimpleTable extends Table {
     const tbody = document.createElement('tbody');
     const tr = document.createElement('tr');
     Setting.getSubjectsByTime()[weekIndex].forEach((sub, idx) => {
-      const td = this.makeClickableTd(sub+'', sub.teacher);
+      const td = ElementCreator.makeClickableTd(sub+'', sub.teacher);
       if(idx == currentClass-1) td.classList.add('lin-highlight1');
       tr.appendChild(td);
     });
@@ -101,7 +106,7 @@ class MainTable extends Table {
     tr.appendChild(
       createElementWithText('th', weekName[weekIndex] + '요일'));
     subjects.forEach(sub =>
-      tr.appendChild(this.makeClickableTd(sub+'', sub.teacher)));
+      tr.appendChild(ElementCreator.makeClickableTd(sub+'', sub.teacher)));
     return tr;
   }
   makeHead() {
