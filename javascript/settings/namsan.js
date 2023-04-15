@@ -75,6 +75,7 @@ Setting.group(Lit(2), Mathmatics(2), EarthScience, EarthScience, Lit(1), Foregin
 Setting.group(Eng(1), Lit(3), Eng(2), Creaty, Physics, Mathmatics(1), Music)
   .setToRegularSchedule(Day.FIRDAY);
 
+<<<<<<< HEAD:javascript/settings/namsan.js
 Setting.group(Lit, Eng)
   .setToExamSchedule(4, 6);
 Setting.group(Mathmatics(1), Mathmatics(2))
@@ -85,3 +86,13 @@ Setting.group(KHistory)
   .setToExamSchedule(4, 9);
 
 Start.loadPage();
+=======
+Setting.group(Mathmatics(2))
+  .setToExamSchedule(4, 28);
+Setting.group(Lit)
+  .setToExamSchedule(5, 1);
+Setting.group(Eng, EarthScience)
+  .setToExamSchedule(5, 2);
+Setting.group(Mathmatics(1), KHistory, Physics)
+  .setToExamSchedule(5, 3);
+>>>>>>> 63659ed3f15f65f2dc0a817ff7a99744c3892a82:javascript/setting.js
