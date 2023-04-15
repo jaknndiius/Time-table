@@ -1,6 +1,9 @@
 'use strict'
 const weekName = ["월", "화", "수", "목", "금"];
-const toWeekdayPreiod = index => Math.max(Math.min(index, 5), 1) -1;
+const toWeekdayPreiod = index => {
+  if(index > 0 && index < 6) return index-1;
+  return -1;
+}
 const createElementWithText = (tag, textContent) => {
   const element = document.createElement(tag);
   element.textContent = textContent;
@@ -72,6 +75,7 @@ class SimpleTable extends Table {
   makeBody(weekIndex, currentClass) {
     const tbody = document.createElement('tbody');
     const tr = document.createElement('tr');
+
     Setting.getSubjectsByTime()[weekIndex].forEach((sub, idx) => {
       const td = ElementCreator.makeClickableTd(sub+'', sub.teacher);
       if(idx == currentClass-1) td.classList.add('lin-highlight1');
@@ -80,13 +84,20 @@ class SimpleTable extends Table {
     tbody.appendChild(tr);
     return tbody;
   }
+  makeHoliday() {
+    const div = document.createElement('div');
+    div.classList.add('lin-highlight1')
+    div.appendChild(createElementWithText('p', '오늘은 신나는 휴일!'));
+    return div;
+  }
   static reload(weekIndex, currentClass) {
     const instance = SimpleTable.getInstance();
     const table = document.querySelector('#' + instance.id);
-    table.replaceChildren(
-      createElementWithText('caption', instance.caption),
-      instance.makeHead(currentClass),
-      instance.makeBody(weekIndex, currentClass));
+    if(weekIndex == -1) table.replaceChildren(instance.makeHoliday())
+    else table.replaceChildren(
+          createElementWithText('caption', instance.caption),
+          instance.makeHead(currentClass),
+          instance.makeBody(weekIndex, currentClass));
   }
 }
 class MainTable extends Table {
@@ -167,19 +178,26 @@ class ExamTable extends Table {
     const main = document.createElement('main');
     const rangeUl = document.createElement('ul');
     rangeUl.id = 'range';
-
-    for(const range of attribute.ranges)
-      rangeUl.appendChild(
-        createElementWithText('li', range));
+    if(attribute == undefined) {
+      rangeUl.append(createElementWithText('li', '시험 정보가 업데이트 되지 않았습니다.'));
+      rangeUl.append(createElementWithText('li', '시험 정보를 제공해 주세요 :)'));
+      rangeUl.append(createElementWithText('li', '시험 정보가 제공되면 객관식 밑 서술형 문항 갯수와 시험 범위를 확인하실 수 있습니다.'));
+    }
+    else
+      for(const range of attribute.ranges)
+        rangeUl.appendChild(
+          createElementWithText('li', range));
     main.appendChild(rangeUl);
     const questionsNumberUl = document.createElement('ul');
     questionsNumberUl.id = 'questions_number';
-    attribute.selective > 0 &&
+    if(attribute) {
+      attribute.selective > 0 &&
       questionsNumberUl.appendChild(
         createElementWithText('li', `객관식 ${attribute.selective}개`));
     attribute.descriptive > 0 &&
       questionsNumberUl.appendChild(
         createElementWithText('li', `서술형 ${attribute.descriptive}개`));
+    }
     main.appendChild(questionsNumberUl);
     textDiv.appendChild(main);
 
@@ -213,6 +231,7 @@ class ExamTable extends Table {
     return thead;
   }
   makeBody() {
+    if(Setting.getExamList() <= 0) return null;
     const tbody = document.createElement('tbody');
     const maxSize = Math.max(...Setting.getExamList().map(exams => exams.subjects.length));
 
@@ -239,10 +258,13 @@ class ExamTable extends Table {
   static reload() {
     const instance = ExamTable.getInstance();
     const table = document.querySelector('#' + instance.id);
-    table.replaceChildren(
-      createElementWithText('caption', instance.caption),
-      instance.makeHead(),
-      instance.makeBody());
+
+    const body = instance.makeBody();
+    if(body != null)
+      table.replaceChildren(
+        createElementWithText('caption', instance.caption),
+        instance.makeHead(),
+        body);
   }
 }
 class MoakTestNoti {
@@ -338,8 +360,11 @@ const updateSchoolTimeBar = ({hours, minutes, seconds}) => {
   })();
   if (sumTime >= 0) footer.innerHTML = `하교까지 약 <span>${fix(sumTime/3600)}</span>시간 = <span>${fix(sumTime/60)}</span>분 = <span>${sumTime}</span>초 남았다!`
 }
-
 // load page
-ExamTable.reload();
-MoakTestNoti.reload();
-setInterval(render, 1);
+const Start = {
+  loadPage: () => {
+    ExamTable.reload();
+    MoakTestNoti.reload();
+    setInterval(render, 1);
+  }
+}

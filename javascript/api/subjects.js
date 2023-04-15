@@ -23,16 +23,25 @@ class Subject {
   }
 }
 class MultipleSubject extends Subject {
-  constructor(subjectName, teacher, suffix) {
+  constructor(subjectName, teacher, suffix, fullName) {
     super(subjectName, teacher);
     this.suffix = suffix;
+    this.fullName = fullName;
   }
-  toString() { return this.subjectName[0] + this.suffix; }
+  toString() { return ((this.fullName) ? this.subjectName : this.subjectName[0]) + this.suffix; }
+}
+const SuffixType = {
+  NUMBER: [1, 2, 3, 4, 5],
+  ALPABET: ['A', 'B', 'C', 'D', 'E'],
+  ROMAN: ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ']
 }
 class SubjectList {
-  constructor(subjectName, teachers) {
+  constructor(subjectName, teachers, options={}) {
+
+    const suffixType = options.suffixType || SuffixType.NUMBER;
+    const fullName = options.fullName || false;
     const subjects = teachers.map(
-      (teacher, index) => new MultipleSubject(subjectName, teacher, index+1));
+      (teacher, index) => new MultipleSubject(subjectName, teacher, suffixType[index], fullName));
       
     const listFunction = order => subjects[order-1];
     listFunction.toString = () => subjectName;
