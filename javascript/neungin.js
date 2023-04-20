@@ -1,4 +1,7 @@
 'use strict'
+import {
+  Subject, SubjectList, SuffixType, Setting, Day, loadPage, SelfStudy
+} from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['박수진', '송선용'], { suffixType: SuffixType.ALPABET});
 // 수학
@@ -36,9 +39,6 @@ Setting.group(Eng, Ethics, Social, Lit(2), Mathmatics(1), Mathmatics(2), Geograp
 Setting.group(PE, Geography, Eng, Mathmatics(2), Lit(2), Info(2), Social)
   .setToRegularSchedule(Day.FIRDAY);
 
-//자습
-const SelfStudy = new Subject('자습', '')
-
 Setting.group(SelfStudy, Mathmatics(1), Social)
   .setToExamSchedule(4, 27);
 Setting.group(Info, Eng, Ethics)
@@ -48,4 +48,4 @@ Setting.group(Foregin, Mathmatics(2), Geography)
 Setting.group(SelfStudy, Lit)
   .setToExamSchedule(5, 2);
 
-Start.loadPage();
+loadPage();

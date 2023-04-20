@@ -1,4 +1,7 @@
 'use strict'
+import {
+  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage
+} from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['윤동희', '신치훈', '김병호']);
 Lit.setExam(
@@ -83,4 +86,5 @@ Setting.group(Eng, EarthScience)
   .setToExamSchedule(5, 2);
 Setting.group(Mathmatics(1), KHistory, Physics)
   .setToExamSchedule(5, 3);
-Start.loadPage();
+
+loadPage();
