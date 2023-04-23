@@ -1,6 +1,6 @@
 'use strict'
 import {
-  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage
+  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage, ClassName
 } from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['윤동희', '신치훈', '김병호']);
@@ -11,7 +11,7 @@ Lit.setExam(
 // 인상
 const Human = new Subject('인상', '윤동희');
 // 영어
-const Eng = new SubjectList('영어', ['장인석', '이석훈', '장인석']);
+const Eng = new SubjectList('영어', ['장인석', '이성훈', '장인석']);
 Eng.setExam(
   new ExamAttribute(24,4)
     .addRange('교과서: lesson 1, 2, 3')
@@ -62,11 +62,20 @@ const Foregin = new Subject('일본어', '김희인');
 // 창체
 const Creaty = new Subject('창체', '장인석');
 //모의고사
-Setting.addMockTest('2023/03/23');
-Setting.addMockTest('2023/06/01');
-Setting.addMockTest('2023/09/06');
-Setting.addMockTest('2023/11/21');
-//시간표
+Setting.addMoakTest('2023/03/23');
+Setting.addMoakTest('2023/06/01');
+Setting.addMoakTest('2023/09/06');
+Setting.addMoakTest('2023/11/21');
+//시간표 시간
+Setting.setClassTime(ClassName.CLASS1, 8, 0);
+Setting.setClassTime(ClassName.CLASS2, 9, 20);
+Setting.setClassTime(ClassName.CLASS3, 10, 20);
+Setting.setClassTime(ClassName.CLASS4, 11, 20);
+Setting.setClassTime(ClassName.LUNCH, 12, 20);
+Setting.setClassTime(ClassName.CLASS5, 14, 0);
+Setting.setClassTime(ClassName.CLASS6, 15, 0);
+Setting.setClassTime(ClassName.CLASS7, 16, 0);
+//시간표 과목
 Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, EarthScience)
   .setToRegularSchedule(Day.MONDAY);
 Setting.group(Physics, Physics, Mathmatics(3), PE, Human, Lit(2), Eng(1))
