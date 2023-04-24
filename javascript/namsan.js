@@ -62,10 +62,10 @@ const Foregin = new Subject('일본어', '김희인');
 // 창체
 const Creaty = new Subject('창체', '장인석');
 //모의고사
-Setting.addMockTest('2023/03/23');
-Setting.addMockTest('2023/06/01');
-Setting.addMockTest('2023/09/06');
-Setting.addMockTest('2023/11/21');
+Setting.addMoakTest('2023/03/23');
+Setting.addMoakTest('2023/06/01');
+Setting.addMoakTest('2023/09/06');
+Setting.addMoakTest('2023/11/21');
 //시간표 시간
 Setting.setClassTime(ClassName.CLASS1, 8, 0)
 Setting.setClassTime(ClassName.CLASS2, 9, 20)
