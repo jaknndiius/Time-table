@@ -1,6 +1,6 @@
 'use strict'
 import {
-  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage
+  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage, ClassName
 } from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['윤동희', '신치훈', '김병호']);
