@@ -22,7 +22,7 @@ const Music = new Subject('음악', '박진아');
 const Foregin = new Subject('일본어', '유혜인');
 // 창체
 const Creaty = new Subject('창체', '김영준');
-// 모의고사
+//모의고사
 Setting.addMoakTest('2023/03/23');
 Setting.addMoakTest('2023/06/01');
 Setting.addMoakTest('2023/09/06');
