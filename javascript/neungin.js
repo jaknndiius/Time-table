@@ -27,6 +27,15 @@ Setting.addMockTest('2023/03/23');
 Setting.addMockTest('2023/06/01');
 Setting.addMockTest('2023/09/06');
 Setting.addMockTest('2023/11/21');
+//시간표 시간
+Setting.setClassTime(ClassName.CLASS1, 8, 0)
+Setting.setClassTime(ClassName.CLASS2, 9, 20)
+Setting.setClassTime(ClassName.CLASS3, 10, 20)
+Setting.setClassTime(ClassName.CLASS4, 11, 20)
+Setting.setClassTime(ClassName.LUNCH, 12, 20)
+Setting.setClassTime(ClassName.CLASS5, 14, 0)
+Setting.setClassTime(ClassName.CLASS6, 15, 0)
+Setting.setClassTime(ClassName.CLASS7, 16, 0)
 //시간표
 Setting.group(Creaer, Lit(1), Ethics, Mathmatics(1), Foregin, PE, Creaty)
   .setToRegularSchedule(Day.MONDAY);
