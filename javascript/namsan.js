@@ -67,14 +67,14 @@ Setting.addMoakTest('2023/06/01');
 Setting.addMoakTest('2023/09/06');
 Setting.addMoakTest('2023/11/21');
 //시간표 시간
-Setting.setClassTime(ClassName.CLASS1, 8, 0);
-Setting.setClassTime(ClassName.CLASS2, 9, 20);
-Setting.setClassTime(ClassName.CLASS3, 10, 20);
-Setting.setClassTime(ClassName.CLASS4, 11, 20);
-Setting.setClassTime(ClassName.LUNCH, 12, 20);
-Setting.setClassTime(ClassName.CLASS5, 14, 0);
-Setting.setClassTime(ClassName.CLASS6, 15, 0);
-Setting.setClassTime(ClassName.CLASS7, 16, 0);
+Setting.setClassTime(ClassName.CLASS1, 8, 0)
+Setting.setClassTime(ClassName.CLASS2, 9, 20)
+Setting.setClassTime(ClassName.CLASS3, 10, 20)
+Setting.setClassTime(ClassName.CLASS4, 11, 20)
+Setting.setClassTime(ClassName.CLASS5, 12, 20)
+Setting.setClassTime(ClassName.CLASS6, 14, 0)
+Setting.setClassTime(ClassName.CLASS7, 15, 0)
+Setting.setClassTime(ClassName.END, 16, 0)
 //시간표 과목
 Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, EarthScience)
   .setToRegularSchedule(Day.MONDAY);

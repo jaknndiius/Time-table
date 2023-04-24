@@ -32,10 +32,10 @@ Setting.setClassTime(ClassName.CLASS1, 8, 0);
 Setting.setClassTime(ClassName.CLASS2, 9, 20);
 Setting.setClassTime(ClassName.CLASS3, 10, 15);
 Setting.setClassTime(ClassName.CLASS4, 11, 15);
-Setting.setClassTime(ClassName.LUNCH, 12, 10);
-Setting.setClassTime(ClassName.CLASS5, 14, 20);
-Setting.setClassTime(ClassName.CLASS6, 15, 20);
-Setting.setClassTime(ClassName.CLASS7, 16, 20);
+Setting.setClassTime(ClassName.CLASS5, 12, 10);
+Setting.setClassTime(ClassName.CLASS6, 14, 20);
+Setting.setClassTime(ClassName.CLASS7, 15, 20);
+Setting.setClassTime(ClassName.END, 16, 20);
 // 시간표 과목
 Setting.group(Creaer, Lit(1), Ethics, Mathmatics(1), Foregin, PE, Creaty)
   .setToRegularSchedule(Day.MONDAY);
