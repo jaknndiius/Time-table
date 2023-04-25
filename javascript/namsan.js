@@ -66,6 +66,7 @@ Setting.addMoakTest('2023/03/23');
 Setting.addMoakTest('2023/06/01');
 Setting.addMoakTest('2023/09/06');
 Setting.addMoakTest('2023/11/21');
+Setting.setCSAT('2025/11/13');
 //시간표 시간
 Setting.setClassTime(ClassName.CLASS1, 8, 0)
 Setting.setClassTime(ClassName.CLASS2, 9, 20)
