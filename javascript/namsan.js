@@ -1,6 +1,6 @@
 'use strict'
 import {
-  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage, ClassName
+  Subject, SubjectList, ExamAttribute, Setting, Day, loadPage, ClassTimeList
 } from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['윤동희', '신치훈', '김병호']);
@@ -61,22 +61,24 @@ const Art = new Subject('미술', '권유정');
 const Foregin = new Subject('일본어', '김희인');
 // 창체
 const Creaty = new Subject('창체', '장인석');
-//모의고사
+// 모의고사
 Setting.addMoakTest('2023/03/23');
 Setting.addMoakTest('2023/06/01');
 Setting.addMoakTest('2023/09/06');
 Setting.addMoakTest('2023/11/21');
-Setting.setCSAT('2025/11/13');
-//시간표 시간
-Setting.setClassTime(ClassName.CLASS1, 8, 0)
-Setting.setClassTime(ClassName.CLASS2, 9, 20)
-Setting.setClassTime(ClassName.CLASS3, 10, 20)
-Setting.setClassTime(ClassName.CLASS4, 11, 20)
-Setting.setClassTime(ClassName.CLASS5, 12, 20)
-Setting.setClassTime(ClassName.CLASS6, 14, 0)
-Setting.setClassTime(ClassName.CLASS7, 15, 0)
-Setting.setClassTime(ClassName.END, 16, 0)
-//시간표 과목
+// 수능
+Setting.setCSAT('2024/11/14');
+// 시간 설정
+const classTimes = new ClassTimeList([8, 0], [16, 0], 7);
+classTimes.addClassTime(8, 20);
+classTimes.addClassTime(9, 20);
+classTimes.addClassTime(10, 20);
+classTimes.addClassTime(11, 20);
+classTimes.addClassTime(12, 20);
+classTimes.addClassTime(14, 0);
+classTimes.addClassTime(15, 0);
+Setting.setClassTime(classTimes);
+// 정규 시간표
 Setting.group(Lit(1), Eng(2), Mathmatics(1), Creaty, Mathmatics(2), Music, EarthScience)
   .setToRegularSchedule(Day.MONDAY);
 Setting.group(Physics, Physics, Mathmatics(3), PE, Human, Lit(2), Eng(1))
@@ -87,14 +89,14 @@ Setting.group(Lit(2), Mathmatics(2), EarthScience, EarthScience, Lit(1), Foregin
   .setToRegularSchedule(Day.THURSDAY);
 Setting.group(Eng(1), Lit(3), Eng(2), Creaty, Physics, Mathmatics(1), Music)
   .setToRegularSchedule(Day.FIRDAY);
-
-Setting.group(Mathmatics(2))
-  .setToExamSchedule(4, 28);
-Setting.group(Lit)
-  .setToExamSchedule(5, 1);
-Setting.group(Eng, EarthScience)
-  .setToExamSchedule(5, 2);
-Setting.group(Mathmatics(1), KHistory, Physics)
-  .setToExamSchedule(5, 3);
+// 시험 시간표
+// Setting.group(Mathmatics(2))
+//   .setToExamSchedule(4, 28);
+// Setting.group(Lit)
+//   .setToExamSchedule(5, 1);
+// Setting.group(Eng, EarthScience)
+//   .setToExamSchedule(5, 2);
+// Setting.group(Mathmatics(1), KHistory, Physics)
+//   .setToExamSchedule(5, 3);
 
 loadPage();

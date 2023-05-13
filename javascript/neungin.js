@@ -1,6 +1,6 @@
 'use strict'
 import {
-  Subject, SubjectList, SuffixType, Setting, Day, loadPage, SelfStudy, ClassName
+  Subject, SubjectList, SuffixType, Setting, Day, loadPage, ClassTimeList
 } from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['박수진', '송선용'], { suffixType: SuffixType.ALPABET});
@@ -22,22 +22,24 @@ const Music = new Subject('음악', '박진아');
 const Foregin = new Subject('일본어', '유혜인');
 // 창체
 const Creaty = new Subject('창체', '김영준');
-//모의고사
+// 모의고사
 Setting.addMoakTest('2023/03/23');
 Setting.addMoakTest('2023/06/01');
 Setting.addMoakTest('2023/09/06');
 Setting.addMoakTest('2023/11/21');
-Setting.setCSAT('2025/11/13');
-// 시간표 시간
-Setting.setClassTime(ClassName.CLASS1, 8, 0);
-Setting.setClassTime(ClassName.CLASS2, 9, 20);
-Setting.setClassTime(ClassName.CLASS3, 10, 15);
-Setting.setClassTime(ClassName.CLASS4, 11, 15);
-Setting.setClassTime(ClassName.CLASS5, 12, 10);
-Setting.setClassTime(ClassName.CLASS6, 14, 20);
-Setting.setClassTime(ClassName.CLASS7, 15, 20);
-Setting.setClassTime(ClassName.END, 16, 20);
-// 시간표 과목
+// 수능
+Setting.setCSAT('2024/11/14');
+// 시간 설정
+const classTimes = new ClassTimeList([8, 0], [16, 20], 7);
+classTimes.addClassTime(8, 30);
+classTimes.addClassTime(9, 20);
+classTimes.addClassTime(10, 15);
+classTimes.addClassTime(11, 15);
+classTimes.addClassTime(12, 10);
+classTimes.addClassTime(14, 20);
+classTimes.addClassTime(15, 20);
+Setting.setClassTime(classTimes);
+// 정규 시간표
 Setting.group(Creaer, Lit(1), Ethics, Mathmatics(1), Foregin, PE, Creaty)
   .setToRegularSchedule(Day.MONDAY);
 Setting.group(Mathmatics(2), Social, Foregin, Geography, Ethics, Eng, Lit(1))
@@ -48,14 +50,14 @@ Setting.group(Eng, Ethics, Social, Lit(2), Mathmatics(1), Mathmatics(2), Geograp
   .setToRegularSchedule(Day.THURSDAY);
 Setting.group(PE, Geography, Eng, Mathmatics(2), Lit(2), Info(2), Social)
   .setToRegularSchedule(Day.FIRDAY);
-
-Setting.group(SelfStudy, Mathmatics(1), Social)
-  .setToExamSchedule(4, 27);
-Setting.group(Info, Eng, Ethics)
-  .setToExamSchedule(4, 28);
-Setting.group(Foregin, Mathmatics(2), Geography)
-  .setToExamSchedule(5, 1);
-Setting.group(SelfStudy, Lit)
-  .setToExamSchedule(5, 2);
+// 시험 시간표
+// Setting.group(SelfStudy, Mathmatics(1), Social)
+//   .setToExamSchedule(4, 27);
+// Setting.group(Info, Eng, Ethics)
+//   .setToExamSchedule(4, 28);
+// Setting.group(Foregin, Mathmatics(2), Geography)
+//   .setToExamSchedule(5, 1);
+// Setting.group(SelfStudy, Lit)
+//   .setToExamSchedule(5, 2);
 
 loadPage();
