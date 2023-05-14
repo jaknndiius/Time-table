@@ -1,7 +1,7 @@
 'use strict'
 import {
   Subject, SubjectList, SuffixType, Setting, Day, loadPage, ClassTimeList
-} from 'https://jaknndiius.github.io/TimeTableAPI/timeTableAPI.js';
+} from 'https://jaknndiius.github.io/TimeTableAPI/js/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['박수진', '송선용'], { suffixType: SuffixType.ALPABET});
 // 수학
@@ -40,22 +40,22 @@ classTimes.addClassTime(14, 20);
 classTimes.addClassTime(15, 20);
 Setting.setClassTime(classTimes);
 // 정규 시간표
-Setting.group(Creaer, Lit(1), Ethics, Mathmatics(1), Foregin, PE, Creaty)
+Setting.group(Creaer, Lit[1], Ethics, Mathmatics[1], Foregin, PE, Creaty)
   .setToRegularSchedule(Day.MONDAY);
-Setting.group(Mathmatics(2), Social, Foregin, Geography, Ethics, Eng, Lit(1))
+Setting.group(Mathmatics[2], Social, Foregin, Geography, Ethics, Eng, Lit[1])
   .setToRegularSchedule(Day.THEUSDAY);
-Setting.group(Mathmatics(1), Eng, Mathmatics(2), Info(1), Music, Creaty, Creaty)
+Setting.group(Mathmatics[1], Eng, Mathmatics[2], Info[1], Music, Creaty, Creaty)
   .setToRegularSchedule(Day.WEDNESDAY);
-Setting.group(Eng, Ethics, Social, Lit(2), Mathmatics(1), Mathmatics(2), Geography)
+Setting.group(Eng, Ethics, Social, Lit[2], Mathmatics[1], Mathmatics[2], Geography)
   .setToRegularSchedule(Day.THURSDAY);
-Setting.group(PE, Geography, Eng, Mathmatics(2), Lit(2), Info(2), Social)
+Setting.group(PE, Geography, Eng, Mathmatics[2], Lit[2], Info[2], Social)
   .setToRegularSchedule(Day.FIRDAY);
 // 시험 시간표
-// Setting.group(SelfStudy, Mathmatics(1), Social)
+// Setting.group(SelfStudy, Mathmatics[1], Social)
 //   .setToExamSchedule(4, 27);
 // Setting.group(Info, Eng, Ethics)
 //   .setToExamSchedule(4, 28);
-// Setting.group(Foregin, Mathmatics(2), Geography)
+// Setting.group(Foregin, Mathmatics[2], Geography)
 //   .setToExamSchedule(5, 1);
 // Setting.group(SelfStudy, Lit)
 //   .setToExamSchedule(5, 2);
