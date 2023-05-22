@@ -3,12 +3,12 @@ import {
   Subject, SubjectList, SuffixType, Setting, Day, loadPage, ClassTimeList
 } from 'https://jaknndiius.github.io/TimeTableAPI/js/timeTableAPI.js';
 // 문학
-const Lit = new SubjectList('문학', ['박수진', '송선용'], { suffixType: SuffixType.ALPABET});
+const Lit = new SubjectList('문학', ['박수진', '송선용'], new DisplayOptions(SuffixType.ALPABET));
 // 수학
-const Mathmatics = new SubjectList('수학', ['최재곤', '나영진'], { suffixType: SuffixType.ROMAN });
+const Mathmatics = new SubjectList('수학', ['최재곤', '나영진'], new DisplayOptions(SuffixType.ROMAN));
 // 영어
 const Eng = new Subject('영어', '김영준');
-const Info = new SubjectList('정보', ['박호규', '백장미'], { suffixType: SuffixType.ALPABET, fullName: true });
+const Info = new SubjectList('정보', ['박호규', '백장미'], new DisplayOptions(SuffixType.ALPABET, true));
 const Creaer = new Subject('창진', '한재봉');
 // 체육
 const PE = new Subject('운동', '박건후');
