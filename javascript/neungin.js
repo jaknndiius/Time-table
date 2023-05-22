@@ -1,6 +1,6 @@
 'use strict'
 import {
-  Subject, SubjectList, SuffixType, Setting, Day, loadPage, ClassTimeList
+  Subject, SubjectList, SuffixType, Setting, Day, loadPage, ClassTimeList, DisplayOptions
 } from 'https://jaknndiius.github.io/TimeTableAPI/js/timeTableAPI.js';
 // 문학
 const Lit = new SubjectList('문학', ['박수진', '송선용'], new DisplayOptions(SuffixType.ALPABET));
