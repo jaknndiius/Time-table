@@ -38,7 +38,7 @@ Physics.setExam(
     .addRange('교과서: p10~93')
     .addRange('완자: p10~145')
 );
-const EarthScience = new Subject('지학', '이은진');
+const EarthScience = new Subject('지학', '정희찬');
 EarthScience.setExam(
   new ExamAttribute(20, 4)
     .addRange('교과서: p10~77')
